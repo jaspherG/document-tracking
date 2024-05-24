@@ -13,7 +13,7 @@
                   <h3 class="font-weight-bolder text-danger text-gradient">Document Tracking & Management System</h3>
                 </div>
                 <div class="card-body">
-                  <form role="form" method="POST" action="/session">
+                  <form role="form" method="POST" action="/login-session">
                     @csrf
                     <label>Email</label>
                     <div class="mb-3">

@@ -14,8 +14,8 @@
                             @method('PUT')
                         @endif
                         @csrf
-                        <input type="hidden" name="route_name" value="cross-enroll">
-                        <input type="hidden" name="service_id" value="4">
+                        <input type="hidden" name="route_name" value="admission">
+                        <input type="hidden" name="service_id" value="1">
                         <input type="hidden" name="requirement_id" value="{{$formData->id ?? ''}}"> 
                         <input type="hidden" name="student_id" value="{{$formData->student_id ?? ''}}"> 
                         @if($errors->any())
@@ -170,7 +170,7 @@
                                                         </div>
                                                         @if(isset($r_document) && !empty($r_document->image))
                                                         <div >
-                                                            <img src="/images/cross-enroll/{{$r_document->image}}" class="avatar avatar-sm me-3 ">
+                                                            <img src="/images/admission/{{$r_document->image}}" class="avatar avatar-sm me-3 ">
                                                         </div>
                                                         @endif
                                                     </div>

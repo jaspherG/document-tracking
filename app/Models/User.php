@@ -15,22 +15,27 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      *
-     * @var string[]
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
+        'lrn_number',
         'email',
         'password',
-        'role',
-        'phone',
-        'address',
+        'type',
+        'phone_number',
         'course',
+        'address',
+        'class_year',
+        'status',
+        'image',
+        'deleted_flag'
     ];
 
     /**
      * The attributes that should be hidden for serialization.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -40,15 +45,20 @@ class User extends Authenticatable
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    public function role(): BelongsTo
+    public function requirements()
     {
-        return $this->belongsTo(Role::class);
+        return $this->hasMany(Requirement::class);
+    }
+
+    public function requirement_documents()
+    {
+        return $this->hasMany(RequirementDocument::class);
     }
     
 }

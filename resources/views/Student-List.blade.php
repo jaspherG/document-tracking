@@ -5,7 +5,7 @@
 <div>
     <div class="alert alert-secondary mx-4" role="alert">
         <span class="text-white">
-            <strong>Hi Admin</strong> Welcome
+            <strong>Hi {{$user->name}}</strong> Welcome
         </span>
     </div>
 
@@ -37,7 +37,7 @@
                                         Email
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Admission Date
+                                        Course
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action
@@ -45,168 +45,37 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">1</p>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <img src="../assets/img/jaspher-1.jpg" class="avatar avatar-sm me-3">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Jaspher Gutierrez</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">guitierrezapey@gmail.com</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">5/03/2024</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">2</p>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <img src="/assets/img/JerB-2.jpg" class="avatar avatar-sm me-3">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Jemar Bombales</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">jemar@gmail.com</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">05/3/2024</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">3</p>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <img src="/assets/img/Ikay-3.jpg" class="avatar avatar-sm me-3">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Rosaly Supleo</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">IkayMaingay@gmail.com</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">23/06/20</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">4</p>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <img src="/assets/img/Steff-4.jpg" class="avatar avatar-sm me-3">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Desirie Manalo</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Steff@gmail.com</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">26/10/17</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">5</p>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <img src="/assets/img/Ejay-5.jpg" class="avatar avatar-sm me-3">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Elijah Rotoni</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">jahjah@gmail.com</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">23/01/21</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
-                                    </td>
+                                @if(count($students) > 0)
+                                    @foreach($students as $key => $student)
+                                    <tr>
+                                        <td class="ps-4">
+                                            <p class="text-xs font-weight-bold mb-0">{{$key+1}}</p>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <img src="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}" class="avatar avatar-sm me-3">
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">{{$student->name}}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">{{$student->email}}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">{{$student->course}}</span>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="/student/{{$student->id}}" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
+                                                <i class="fas fa-user-edit text-secondary"></i>
+                                            </a>
+                                            <span>
+                                                <i class="text-danger cursor-pointer fas fa-trash text-secondary"></i>
+                                            </span>
+                                        </td>
                                     </tr>
-                                <tr>
-                                    <td class="ps-4">
-                                        <p class="text-xs font-weight-bold mb-0">6</p>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <img src="/assets/img/Dagus-6.jpg" class="avatar avatar-sm me-3">
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Natsy Dagus</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <p class="text-xs font-weight-bold mb-0">Natnat21@gmail.com</p>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">23/01/21</span>
-                                    </td>
-                                    <td class="text-center">
-                                        <a href="#" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                            <i class="fas fa-user-edit text-secondary"></i>
-                                        </a>
-                                        <span>
-                                            <i class="cursor-pointer fas fa-trash text-secondary"></i>
-                                        </span>
-                                    </td>
-                                </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
