@@ -1,5 +1,10 @@
 <?php
 
+
+/* Middleware */
+use App\Http\Middleware\CheckAuthUsers;
+use App\Http\Middleware\CheckAuthAdmin;
+/* Controllers */
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InfoUserController;
@@ -20,23 +25,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::middleware([CheckAuthUsers::class])->group(function () {
+	Route::get('program/{id}', [HomeController::class, 'program'])->name('program');
+});
 
-
-Route::group(['middleware' => 'auth'], function () {
-
-  Route::get('/', [HomeController::class, 'home']);
-	Route::get('dashboard', [HomeController::class, 'viewDashboard'])->name('dashboard');
-
-	Route::get('sample-page-registrar', [HomeController::class, 'samplePageRegistrar'])->name('sample-page-registrar');
-
-	Route::get('profile', [HomeController::class, 'profile'])->name('profile');
-
+Route::middleware([CheckAuthAdmin::class])->group(function () {
 	Route::get('student-management', [HomeController::class, 'StudentManagement'])->name('StudentManagement');
+	Route::get('/student-management/{id}', [HomeController::class, 'showServiceManagement'])->name('show.requirements');
 
 	Route::get('student-list', [HomeController::class, 'StudentList'])->name('Student-List');
 	Route::get('student/{id}', [HomeController::class, 'editStudent'])->name('edit.student');
-
-	Route::get('shiftee', [HomeController::class, 'Shiftee'])->name('Shiftee');
 
 	Route::get('admission', [HomeController::class, 'admission'])->name('admission');
 	Route::get('admission/{id}', [HomeController::class, 'editAdmission'])->name('edit.admission');
@@ -50,27 +48,17 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('cross-enroll', [HomeController::class, 'CrossEnroll'])->name('cross-enroll');
 	Route::get('cross-enroll/{id}', [HomeController::class, 'editCrossEnroll'])->name('edit.cross-enroll');
 
-	Route::get('program/{id}', [HomeController::class, 'program'])->name('program');
+	// save requirement
+	Route::post('/requirement', [HomeController::class, 'storeRequirement'])->name('store.requirement');
+	Route::put('/requirement', [HomeController::class, 'updateRequirement'])->name('update.requirement');
+});
 
-	// Route::get('BSIT', function (Request $request) {
-	// 	$user = $request->user();
-	// 	return view('BSIT', compact(['user']));
-	// })->name('BSIT');
+Route::group(['middleware' => 'auth'], function () {
 
-	// Route::get('BSED-MT', function (Request $request) {
-	// 	$user = $request->user();
-	// 	return view('BSED-MT', compact(['user']));
-	// })->name('BSED-MT');
+  Route::get('/', [HomeController::class, 'home']);
+	Route::get('dashboard', [HomeController::class, 'viewDashboard'])->name('dashboard');
 
-	// Route::get('BSED-EN', function (Request $request) {
-	// 	$user = $request->user();
-	// 	return view('BSED-EN', compact(['user']));
-	// })->name('BSED-EN');
-
-	// Route::get('BPA', function (Request $request) {
-	// 	$user = $request->user();
-	// 	return view('BPA', compact(['user']));
-	// })->name('BPA');
+	Route::get('profile', [HomeController::class, 'profile'])->name('profile');
 
   Route::get('static-sign-in', function () {
 		return view('laravel-examples/user-management');
@@ -87,11 +75,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('/user-profile', [InfoUserController::class, 'update']);
 	Route::post('/user-delete', [InfoUserController::class, 'destroy']);
 
-	// save requirement
-	Route::post('/requirement', [HomeController::class, 'storeRequirement'])->name('store.requirement');
-	Route::put('/requirement', [HomeController::class, 'updateRequirement'])->name('update.requirement');
-
-	Route::get('/student-management/{id}', [HomeController::class, 'showServiceManagement'])->name('show.requirements');
+	Route::prefix('html-function')->group(function(){
+		Route::get('{id}', [HomeController::class, 'htmlFunctions'])->name('html-functions');
+	});
 });
 
 Route::group(['middleware' => 'guest'], function () {
@@ -108,6 +94,4 @@ Route::group(['middleware' => 'guest'], function () {
 
 });
 
-Route::prefix('html-function')->group(function(){
-  Route::get('{id}', [HomeController::class, 'htmlFunctions'])->name('html-functions');
-});
+

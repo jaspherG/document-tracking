@@ -104,11 +104,6 @@ class HomeController extends Controller
         return $data;
     }
 
-    public function samplePageRegistrar(){
-        $user = Auth::user();
-        return view('sample-page', compact(['user']))->with('_page', 'sample page');
-    }
-
     public function profile(){
         $user = Auth::user();
         return view('profile', compact(['user']))->with('_page', 'profile');
@@ -240,11 +235,6 @@ class HomeController extends Controller
             return view('student-edit-form', compact(['user', 'formData']))->with('_page', 'Edit Student');
         }
         abort(404);
-    }
-
-    public function Shiftee(){
-        $user = Auth::user();
-        return view('Shiftee', compact(['user']))->with('_page', 'Shiftee');
     }
 
     public function CrossEnroll(Request $request){
