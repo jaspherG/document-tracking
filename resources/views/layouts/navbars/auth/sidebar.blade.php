@@ -65,11 +65,11 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link  {{ ($_page == 'Cross-enroll' ? 'active' : '') }}" href="{{ url('cross-enroll') }}">
+        <a class="nav-link  {{ ($_page == 'cross-enroll' ? 'active' : '') }}" href="{{ url('cross-enroll') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Cross-enroll' ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'cross-enroll' ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
           </div>
-          <span class="nav-link-text ms-1">Cross-Enroll</span>
+          <span class="nav-link-text ms-1">Cross Enroll</span>
         </a>
       </li>
       <li class="nav-link mb-0">

@@ -261,7 +261,7 @@ class HomeController extends Controller
         } else {
             $documents = [];
         }
-        return view('Cross-Enroll', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'Cross-enroll');
+        return view('cross-enroll', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'cross-enroll');
     }
 
     public function editCrossEnroll(string $id){
@@ -276,7 +276,7 @@ class HomeController extends Controller
             } else {
                 $documents = [];
             }
-            return view('Cross-Enroll', compact(['user', 'formData', 'documents','programs']))->with('_title', 'Edit')->with('_page', 'Cross-enroll');
+            return view('cross-enroll', compact(['user', 'formData', 'documents','programs']))->with('_title', 'Edit')->with('_page', 'cross-enroll');
         } 
         abort(404);
     }
@@ -293,7 +293,7 @@ class HomeController extends Controller
         } else {
             $documents = [];
         }
-        return view('session.transferee', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'Transferee');
+        return view('transferee', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'Transferee');
     }
 
     public function editTransferee(string $id){
@@ -308,7 +308,7 @@ class HomeController extends Controller
             } else {
                 $documents = [];
             }
-            return view('session.transferee', compact(['user', 'formData', 'documents', 'programs']))->with('_title', 'Edit')->with('_page', 'Transferee');
+            return view('transferee', compact(['user', 'formData', 'documents', 'programs']))->with('_title', 'Edit')->with('_page', 'Transferee');
         } 
         abort(404);
     }
@@ -356,7 +356,7 @@ class HomeController extends Controller
         } else {
             $documents = [];
         }
-        return view('laravel-examples.Re-admission', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'Returnee');
+        return view('Re-admission', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'Returnee');
     }
 
     public function editReAdmission(string $id){
@@ -372,7 +372,7 @@ class HomeController extends Controller
                 $documents = [];
             }
 
-            return view('laravel-examples.Re-admission', compact(['user', 'formData', 'documents','programs']))->with('_title', 'Edit')->with('_page', 'Returnee');
+            return view('Re-admission', compact(['user', 'formData', 'documents','programs']))->with('_title', 'Edit')->with('_page', 'Returnee');
         } 
         abort(404);
     }
