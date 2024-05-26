@@ -112,10 +112,23 @@ class HomeController extends Controller
     public function StudentManagement(){
         $user = Auth::user();
         $serviceData = $this->getServiceStudentRequirements();
-        return view('StudentManagement', compact(['user', 'serviceData']))->with('_page', 'Student Management')->with('_service', 0)->with('_completed', 1)->with('_deficiency', 1);
+        return view('StudentManagement', compact(['user', 'serviceData']))->with('_page', 'Student Management')->with('_service', 0)->with('_completed', 1)->with('_deficiency', 1)->with('service', 'All');
     }
 
     public function showServiceManagement(Request $request, string $id){
+        $service = $id;
+        if($id == 'All') {
+           $id = 0; 
+        } else if($id == 'Admission') {
+            $id = 1; 
+        } else if($id == 'Returnee') {
+            $id = 2; 
+        } else if($id == 'Transferee') {
+            $id = 3; 
+        } else if($id == 'Cross-enroll') {
+            $id = 4; 
+        }
+
         $completed = 1;
         $deficiency = 1;
         $status = '';
@@ -126,7 +139,7 @@ class HomeController extends Controller
         }
         $user = Auth::user();
         $serviceData = $this->getServiceStudentRequirements($id, $status);
-        return view('StudentManagement', compact(['user', 'serviceData']))->with('_page', 'Student Management')->with('_service', $id)->with('_completed', $completed)->with('_deficiency', $deficiency);
+        return view('StudentManagement', compact(['user', 'serviceData']))->with('_page', 'Student Management')->with('_service', $id)->with('_completed', $completed)->with('_deficiency', $deficiency)->with('service', $service);
     }
 
     private function getServiceStudentRequirements($serviceId='', $status='', $filter_text='') {

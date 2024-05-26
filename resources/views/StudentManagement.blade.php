@@ -19,18 +19,18 @@
 @section('content')
 <div class="row">
   <div class="col-12 mb-md-0  d-flex align-items-center justify-content-center gap-2 pt-2">
-      <a href="{{ route('show.requirements', ['id' => 0] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 0 ? 'active' : '') }}">All</a>
-      <a href="{{ route('show.requirements', ['id' => 1] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 1 ? 'active' : '') }}">Admission</a>
-      <a href="{{ route('show.requirements', ['id' => 2] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 2 ? 'active' : '') }}">Returnee</a>
-      <a href="{{ route('show.requirements', ['id' => 3] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 3 ? 'active' : '') }}">Transferee</a>
-      <a href="{{ route('show.requirements', ['id' => 4] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 4 ? 'active' : '') }}">Cross-enroll</a>
+      <a href="{{ route('show.requirements', ['id' => 'All'] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 0 ? 'active' : '') }}">All</a>
+      <a href="{{ route('show.requirements', ['id' => 'Admission'] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 1 ? 'active' : '') }}">Admission</a>
+      <a href="{{ route('show.requirements', ['id' => 'Returnee'] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 2 ? 'active' : '') }}">Returnee</a>
+      <a href="{{ route('show.requirements', ['id' => 'Transferee'] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 3 ? 'active' : '') }}">Transferee</a>
+      <a href="{{ route('show.requirements', ['id' => 'Cross-enroll'] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 4 ? 'active' : '') }}">Cross-enroll</a>
   </div>
 </div>
 <div class="row ">
   <div class="col-lg-6 col-12 mb-md-0 mb-4 d-flex align-items-center justify-content-center p-5">
     <div class="col-lg-6">
       <div id="card_completed" class="card cursor-pointer add-shadow {{ ($_completed == 1 ? 'bg-gradient-primary' : 'border border-2 border-primary') }}">
-        <a href="{{ route('show.requirements', ['id' => $_service, 'status' => 'completed'] ) }}" class="text-decoration-none">
+        <a href="{{ route('show.requirements', ['id' => $service, 'status' => 'completed'] ) }}" class="text-decoration-none">
           <div class="card-body ">
             <div class="row text-center ">
                 <div class="col-12">
@@ -50,7 +50,7 @@
   <div class="col-lg-6 col-12 mb-md-0 mb-4 d-flex align-items-center justify-content-center p-5">
     <div class="col-lg-6 ">
       <div id="card_deficiency" class="card cursor-pointer add-shadow {{ ($_deficiency == 1 ? 'bg-gradient-primary text-light' : 'border border-2 border-primary') }} ">
-        <a href="{{ route('show.requirements', ['id' => $_service, 'status' => 'deficiency'] ) }}" class="text-decoration-none">
+        <a href="{{ route('show.requirements', ['id' => $service, 'status' => 'deficiency'] ) }}" class="text-decoration-none">
           <div class="card-body">
             <div class="row text-center ">
                 <div class="col-12">
