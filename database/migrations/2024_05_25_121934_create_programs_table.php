@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('program_name', 15);
             $table->text('description')->nullable();
-            $table->text('class_year')->nullable()->comment('Array of class year');
             $table->timestamps();
         });
     }

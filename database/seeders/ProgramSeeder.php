@@ -15,16 +15,16 @@ class ProgramSeeder extends Seeder
     {
         $programs = [
             [ 'program_name' => 'BSIT',
-            'class_year' => json_encode(['First Year', 'Second Year', 'Third Year', 'Fourth Year']), 
+            'description' => 'Bachelor of Science in Information Technology', 
             ],
             [ 'program_name' => 'BSED-MT',
-            'class_year' => json_encode(['First Year', 'Second Year', 'Third Year', 'Fourth Year']), 
+             'description' => 'Bachelor of Science in Information Technology', 
             ],
             [ 'program_name' => 'BSED-EN',
-            'class_year' => json_encode(['First Year', 'Second Year', 'Third Year', 'Fourth Year']), 
+             'description' => 'Bachelor of Science in Information Technology', 
             ],
             [ 'program_name' => 'BPA',
-            'class_year' => json_encode(['First Year', 'Second Year', 'Third Year', 'Fourth Year']), 
+             'description' => 'Bachelor of Science in Information Technology', 
             ],
         ];
 
