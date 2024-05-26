@@ -30,7 +30,8 @@ class HomeController extends Controller
             return view('dashboard', compact(['user', 'dashboardData']))->with('_page', 'dashboard');
         } else if($user->type == 'Registrar'){ 
             $programs = Program::all();
-            return view('registrar-dashboard', compact(['user', 'programs']))->with('_page', 'dashboard');
+            $dashboardData = $this->registrarDashboardData();
+            return view('registrar-dashboard', compact(['user', 'programs', 'dashboardData']))->with('_page', 'dashboard');
         } else {
             abort(404);
         }
@@ -39,9 +40,31 @@ class HomeController extends Controller
     public function program(Request $request, string $id){
         $user = Auth::user();
         $programs = Program::all();
-        $programData = Program::with('users')->where('program_name', $id)->first();
+        $programData = Program::with('students')->where('program_name', $id)->first();
 
         return view('registrar-program', compact(['user', 'programs', 'programData' ]))->with('_page', $id);
+    }
+
+    private function registrarDashboardData(){
+        $allUsers = User::where('status', 'ACTIVE')->where('deleted_flag', 0)->whereNotNull('course')->get();
+
+        $userCountsPerCourse = $allUsers->groupBy('course')->map(function($group) {
+            return $group->count();
+        });
+
+        $pie_categories = $userCountsPerCourse->keys()->all();
+        $pie_data = $userCountsPerCourse->values()->all();
+        
+        $requirements = Requirement::where('deleted_flag', 0)->count();
+        $documents = RequirementDocument::where('status', 1)->count();
+
+        $data = new \stdClass();
+        $data->requirements = $requirements;
+        $data->documents = $documents;
+        $data->pie_data = $pie_data;
+        $data->pie_categories = $pie_categories;
+
+        return $data;
     }
 
     private function dashboardData() {
@@ -139,7 +162,7 @@ class HomeController extends Controller
                       ->orWhere('course', 'like', $filterText);
             });
         }
-        $requirement = $requirement->orderBy('created_at', 'ASC')
+        $requirement = $requirement->orderByDesc('updated_at')
         ->get();
 
         $allRequirement = $allRequirement->orderBy('created_at', 'ASC')
@@ -250,7 +273,7 @@ class HomeController extends Controller
             } else {
                 $documents = [];
             }
-            return view('Cross-Enroll', compact(['user', 'formData', 'documents','cross-enroll']))->with('_title', 'Edit')->with('_page', 'Cross-enroll');
+            return view('Cross-Enroll', compact(['user', 'formData', 'documents','programs']))->with('_title', 'Edit')->with('_page', 'Cross-enroll');
         } 
         abort(404);
     }
@@ -479,7 +502,7 @@ class HomeController extends Controller
         if( $route_name == 'admission') {
             return redirect()->route('admission')->with('_title', '');
         } else if ( $route_name == 'returnee') {
-            return redirect()->route('re-admission')->with('_title', '');
+            return redirect()->route('returnee')->with('_title', '');
         } else if ( $route_name == 'transferee') {
             return redirect()->route('transferee')->with('_title', '');
         } else if ( $route_name == 'cross-enroll') {
@@ -569,7 +592,7 @@ class HomeController extends Controller
         if( $route_name == 'admission') {
             return redirect()->route('edit.admission', ['id'=>$request->requirement_id])->with('_title', 'Edit');
         } else if ( $route_name == 'returnee') {
-            return redirect()->route('edit.re-admission', ['id'=>$request->requirement_id])->with('_title', 'Edit');
+            return redirect()->route('edit.returnee', ['id'=>$request->requirement_id])->with('_title', 'Edit');
         } else if ( $route_name == 'transferee') {
             return redirect()->route('edit.transferee', ['id'=>$request->requirement_id])->with('_title', 'Edit');
         } else if ( $route_name == 'cross-enroll') {
@@ -607,8 +630,26 @@ class HomeController extends Controller
                 $serviceData = $this->getServiceStudentRequirements($request->filter_service, $status, $request->filter_text);
                 $requirements = $serviceData->requirements;
                 return view('components.filter-student-management-list', compact('requirements'))->render();
+            } else if ($id === 'get-student-requirements-data') {
+                $data = User::with('student_requirements')->with(['requirement_documents' => function($q) {
+                    $q->where('status', 1);
+                }])->where('type', 'Student')->where('id', $request->student_id)->first();
+                $data->student_requirements = $this->formattedRequirements($data->student_requirements);
+                return view('components.view-student-requirements-documents', compact('data'))->render();
+            } else if ($id === 'get-filtered-program-student-list') {
+                $students = User::where('type', 'Student')->where('program_id', $request->filter_program);
+                if(isset($request->filter_text)) {
+                    $filterText = '%' . $request->filter_text . '%';
+                    $students->where(function($query) use ($filterText) {
+                        $query->where('name', 'like', $filterText)
+                              ->orWhere('email', 'like', $filterText)
+                              ->orWhere('course', 'like', $filterText);
+                    });
+                }
+                $students =  $students->get();
+                return view('components.filter-program-student-list', compact('students'))->render();
             }
-        }
+        } 
     }
 
     private function saveImage($image, $folderpath) {
@@ -626,13 +667,16 @@ class HomeController extends Controller
     }
 
     private function emptyFormData($student_id=''){
+        $formData = new \stdClass();
+        $formData->course = '';
+        $formData->program_id = '';
+        $formData->class_year = '';
+
+
         $user_data = new \stdClass();
         $user_data->name = '';
         $user_data->email = '';
         $user_data->phone_number = '';
-        $user_data->course = '';
-        $user_data->program_id = '';
-        $user_data->class_year = '';
         $user_data->address = '';
         $user_data->lrn_number = '';
        
@@ -642,18 +686,16 @@ class HomeController extends Controller
             $user_data->name = $student->name;
             $user_data->email = $student->email;
             $user_data->phone_number = $student->phone_number;
-            $user_data->course = $student->course;
-            $user_data->program_id = $student->program_id;
-            $user_data->class_year = $student->class_year;
             $user_data->address = $student->address;
             $user_data->lrn_number = $student->lrn_number;
+
+            $formData->course = $student->course;
+            $formData->program_id = $student->program_id;
+            $formData->class_year = $student->class_year;
         }
 
-        $formData = new \stdClass();
         $formData->user_student = $user_data;
         $formData->requirement_documents = [];
-
-        
 
         return $formData;
     }

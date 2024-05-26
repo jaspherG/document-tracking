@@ -131,8 +131,8 @@
                     <tr class="table-row">
                       <td class="ps-4">{{$requirement->user_student->name}}</td>
                       <td class="ps-4">{{$requirement->user_student->student_number}}</td>
-                      <td class="ps-4">{{$requirement->user_student->course}}</td>
-                      <td class="ps-4">{{$requirement->user_student->class_year}}</td>
+                      <td class="ps-4">{{$requirement->course}}</td>
+                      <td class="ps-4">{{$requirement->class_year}}</td>
                       <td class="ps-4">
                         <div class="progress-wrapper w-75 ">
                           <div class="progress-info  mb-1">

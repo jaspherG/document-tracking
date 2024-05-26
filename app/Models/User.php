@@ -53,14 +53,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function requirements()
+    public function user_requirements()
     {
-        return $this->hasMany(Requirement::class);
+        return $this->hasMany(Requirement::class, 'user_id');
+    }
+
+    public function student_requirements()
+    {
+        return $this->hasMany(Requirement::class, 'student_id');
     }
 
     public function requirement_documents()
     {
-        return $this->hasMany(RequirementDocument::class);
+        return $this->hasMany(RequirementDocument::class, 'student_id');
     }
 
     public function program()

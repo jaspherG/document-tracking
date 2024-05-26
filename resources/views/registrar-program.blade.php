@@ -13,10 +13,16 @@
     <div class="row">
         <div class="col-12">
             <div class="card mb-4 mx-4">
-                <div class="card-header pb-0">
+            <div class="card-header pb-0">
                     <div class="d-flex flex-row justify-content-between">
                         <div>
-                            <h5 class="mb-0">All Students</h5>
+                            <h5 class="mb-0">{{$programData->program_name}} Students</h5>
+                        </div>
+                        <div class=" d-flex align-items-center">
+                            <div class="input-group">
+                                <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                                <input type="text" class="form-control filter-input" placeholder="Type here...">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -32,50 +38,78 @@
                                         Photo
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Student No.
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Name
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        LRN
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Class Year
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Email
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Course
+                                        Phone #
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Address
                                     </th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Action
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @if(isset($students) && count($students) > 0)
-                                    @foreach($students as $key => $student)
+                            <tbody id="table_body_programs">
+                                @if(isset($programData->students) && count($programData->students) > 0)
+                                    @foreach($programData->students as $key => $student)
                                     <tr>
-                                        <td class="ps-4">
+                                    <td class="ps-4">
                                             <p class="text-xs font-weight-bold mb-0">{{$key+1}}</p>
                                         </td>
                                         <td>
                                             <div>
-                                                <img src="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}" class="avatar avatar-sm me-3">
+                                                <a data-fslightbox="student-list" href="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}">
+                                                    <img src="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}" class="avatar avatar-sm me-3">
+                                                </a>
                                             </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">{{$student->student_number}}</p>
                                         </td>
                                         <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$student->name}}</p>
                                         </td>
                                         <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">{{$student->lrn_number}}</p>
+                                        </td>
+                                        <td class="text-center">
+                                            <p class="text-xs font-weight-bold mb-0">{{$student->class_year}}</p>
+                                        </td>
+                                        <td class="text-center">
                                             <p class="text-xs font-weight-bold mb-0">{{$student->email}}</p>
                                         </td>
                                         <td class="text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">{{$student->course}}</span>
+                                            <span class="text-secondary text-xs font-weight-bold">{{$student->phone_number}}</span>
                                         </td>
                                         <td class="text-center">
-                                            <a href="/student/{{$student->id}}" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit user">
-                                                <i class="fas fa-user-edit text-secondary"></i>
-                                            </a>
-                                            <a href="#" type="button" class="mx-3 delete-student" data-bs-toggle="tooltip" data-bs-original-title="Delete {{ $student->name}}" data-id="{{ $student}}">
-                                                <i class="text-danger fas fa-trash text-secondary"></i>
+                                            <span class="text-secondary text-xs font-weight-bold">{{$student->address}}</span>
+                                        </td>
+                                       
+                                        <td class="text-center">
+                                            <a href="javascript:void(0)" class="mx-3 view-requirement" data-id="{{$student}}" data-bs-toggle="tooltip" data-bs-original-title="View Requirements">
+                                                <i class="fas fa-receipt text-secondary"></i>
                                             </a>
                                         </td>
                                     </tr>
                                     @endforeach
+                                @else
+                                    <tr>
+                                        <td col-span="4">No records found</td>
+                                    </tr>
                                 @endif
                             </tbody>
                         </table>
@@ -86,48 +120,54 @@
     </div>
 
     <!-- Modal -->
-    <button type="button" id="openDeleteModal" class="btn btn-primary float-end btn-md mt-4 mb-4 visually-hidden" data-bs-toggle="modal" data-bs-target="#deleteModal">
-        Received By
+    <button type="button" id="openRequirement" class="btn btn-primary float-end btn-md mt-4 mb-4 visually-hidden" data-bs-toggle="modal" data-bs-target="#viewRequirement">
+        open viewRequirement
     </button>
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="viewRequirement" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirm Deletion</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="exampleModalLabel">Requirements</h5>
+                    <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">X</button>
                 </div>
-                <form action="/user-delete" method="POST">
-                @csrf
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="m-1">
-                                Confirm to delete. <span id="deleteName"></span>
-                            </div>
-                            <input type="hidden" id="deleteId" name="id" value="">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
+                <div class="modal-body">
+              
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
-        $(document).on('click', '.delete-student', function(){ 
+        $(document).on('click', '.view-requirement', function(){ 
             var data = $(this).data('id'); 
-            // var data = JSON.parse(jdata);
             var id = data.id; 
             var name = data.name;
-            $('#deleteId').val(id); // Set the value of the hidden input field
-            $('#deleteName').text(name); // Set the value of the hidden input field
-            $('#openDeleteModal').trigger('click'); // Show the modal
+            $('#viewRequirement').find('.modal-title').text(name); // Show the modal
+            $.get("{{ route('html-functions', ['id' => 'get-student-requirements-data']) }}", {
+                student_id: id
+            }, function(html) {
+                $('#viewRequirement').find('.modal-body').html(html);
+                $('#openRequirement').trigger('click'); // Show the modal
+            });
         });
+
+        // PHP code in Blade template:
+        @php
+            $program_id = $programData->id;
+        @endphp
+
+        $(document).on('input', '.filter-input', function(){
+            var text = $(this).val();
+            $.get("{{ route('html-functions', ['id' => 'get-filtered-program-student-list']) }}", {
+                filter_text: text,
+                filter_program: @json($program_id)
+            }, function(html) {
+                $('#table_body_programs').html(html);
+            });
+        });
+
     });
  
 

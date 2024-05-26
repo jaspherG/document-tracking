@@ -6,7 +6,9 @@
         </td>
         <td>
             <div>
-                <img src="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}" class="avatar avatar-sm me-3">
+              <a data-fslightbox="student-list" href="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}">
+                  <img src="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}" class="avatar avatar-sm me-3">
+              </a>
             </div>
         </td>
         <td class="text-center">
@@ -36,3 +38,5 @@
   <td col-span="4">No records found</td>
 </tr>
 @endif
+
+<script src="/assets/vendor/fslightbox-basic-3.4.1/fslightbox.js"></script>

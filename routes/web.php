@@ -41,8 +41,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('admission', [HomeController::class, 'admission'])->name('admission');
 	Route::get('admission/{id}', [HomeController::class, 'editAdmission'])->name('edit.admission');
 	
-	Route::get('re-admission', [HomeController::class, 'reAdmission'])->name('re-admission');
-	Route::get('re-admission/{id}', [HomeController::class, 'editReAdmission'])->name('edit.re-admission');
+	Route::get('returnee', [HomeController::class, 'reAdmission'])->name('returnee');
+	Route::get('returnee/{id}', [HomeController::class, 'editReAdmission'])->name('edit.returnee');
 
 	Route::get('transferee', [HomeController::class, 'transferee'])->name('transferee');
 	Route::get('transferee/{id}', [HomeController::class, 'editTransferee'])->name('edit.transferee');

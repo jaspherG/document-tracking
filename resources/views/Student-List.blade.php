@@ -3,11 +3,6 @@
 @section('content')
 
 <div>
-    <div class="alert alert-secondary mx-4" role="alert">
-        <span class="text-white">
-            <strong>Hi {{$user->name}}</strong> Welcome
-        </span>
-    </div>
 
     <div class="row">
         <div class="col-12">
@@ -59,7 +54,9 @@
                                         </td>
                                         <td>
                                             <div>
-                                                <img src="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}" class="avatar avatar-sm me-3">
+                                                <a data-fslightbox="student-list" href="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}">
+                                                    <img src="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}" class="avatar avatar-sm me-3">
+                                                </a>
                                             </div>
                                         </td>
                                         <td class="text-center">
@@ -149,7 +146,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <a class="service-requirement" href="javascript:void(0)" name="re-admission" data-id="">
+                                    <a class="service-requirement" href="javascript:void(0)" name="returnee" data-id="">
                                         <h6 class="mb-0"><i class="fas fa-receipt mx-2 text-dark"></i>Returnee</h6>
                                     </a>
                                 </td>

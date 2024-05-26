@@ -1,13 +1,19 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-<div class="row">
+<div class="alert alert-secondary mx-4 mb-2" role="alert">
+    <span class="text-white">
+        <strong>Hi {{$user->name}}</strong> Welcome
+    </span>
+</div>
+<div class="row mx-2 my-4">
   <div class="col-lg-8 col-md-12 mb-md-0 mb-4">
     <div class="card">
         <div id="chart"></div>
     </div>  
   </div>
   <div class="col-lg-4 col-md-12 mb-md-0 mb-4">
+   
     <div class="row ">
         <div class="col-lg-6 mb-3">
             <div class="card border-0 shadow-sm">
@@ -117,7 +123,10 @@
   </div>
 </div>
 
+
+
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     var options = {
         series: [ {
@@ -174,6 +183,10 @@
     
     var chart = new ApexCharts(document.querySelector("#chart"), options);
     chart.render();
+
+
+
+
 </script>
     
 @endsection

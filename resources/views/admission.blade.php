@@ -84,7 +84,7 @@
                                 <div class="form-group">
                                     <label for="course" class="form-control-label">{{ __('Course') }} <b class="text-danger">*</b></label>
                                     @php
-                                        $c_year = old('course') ?? $formData->user_student->program_id;
+                                        $c_year = old('course') ?? $formData->program_id;
                                     @endphp
                                     <select required class="form-control form-select @error('course') border-danger @enderror" type="text" id="course" name="course">
                                         <option value="">-- select course --</option>  
@@ -103,7 +103,7 @@
                                 <div class="form-group">
                                     <label for="class_year" class="form-control-label">{{ __('Class Year') }} <b class="text-danger">*</b></label>
                                     @php
-                                        $c_year = old('class_year') ?? $formData->user_student->class_year;
+                                        $c_year = old('class_year') ?? $formData->class_year;
                                     @endphp
                                     <select required class="form-control form-select @error('class_year') border-danger @enderror" type="text" id="class_year" name="class_year">
                                         <option value="">-- select class year --</option>  
@@ -180,7 +180,9 @@
                                                         </div>
                                                         @if(isset($r_document) && !empty($r_document->image))
                                                         <div >
-                                                            <img src="/images/admission/{{$r_document->image}}" class="avatar avatar-sm me-3 ">
+                                                            <a data-fslightbox="all-requirements" href="/images/admission/{{$r_document->image}}">
+                                                                <img src="/images/admission/{{$r_document->image}}" class="avatar avatar-sm me-3 ">
+                                                            </a>
                                                         </div>
                                                         @endif
                                                     </div>

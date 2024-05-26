@@ -20,7 +20,7 @@ class Program extends Model
         'class_year',
     ];
 
-    public function users()
+    public function students()
     {
         return $this->hasMany(User::class);
     }
