@@ -17,7 +17,6 @@ use Illuminate\Support\Str;
 
 class InfoUserController extends Controller
 {
-
     public function create()
     {
         return view('laravel-examples/user-profile');
@@ -33,6 +32,7 @@ class InfoUserController extends Controller
             'course' => 'required|string',
             'class_year' => 'required|string',
             'lrn_number' => 'required|string',
+            'student_number' => 'nullable|string',
         ]);
     
         $user = User::where('lrn_number', $validated['lrn_number'])
@@ -71,6 +71,7 @@ class InfoUserController extends Controller
             'course' => 'required|string',
             'class_year' => 'required|string',
             'lrn_number' => 'required|string',
+            'student_number' => 'nullable|string',
         ]);
 
         $user = User::findOrFail($validated['student_id']);
@@ -97,6 +98,13 @@ class InfoUserController extends Controller
             }
         } 
 
+        return redirect()->route('Student-List');
+    }
+
+    public function destroy(Request $request){
+        $user = User::findOrFail($request->id);
+        $user->deleted_flag = 1;
+        $user->save();
         return redirect()->route('Student-List');
     }
 

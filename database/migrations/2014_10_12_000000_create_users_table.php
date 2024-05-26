@@ -16,13 +16,15 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('lrn_number')->nullable();
+            $table->string('student_number')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('type', ['Registrar', 'Admission', 'Student'])->default('Registrar');
             $table->string('phone_number')->nullable();
-            $table->string('course')->nullable();
+            $table->string('course', 15);
+            $table->foreignIdFor(\App\Models\Program::class,'program_id');
             $table->string('address')->nullable();
             $table->enum('class_year', ['First Year', 'Second Year', 'Third Year', 'Fourth Year'])->nullable();
             $table->string('image', 225)->nullable();

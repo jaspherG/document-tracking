@@ -20,6 +20,7 @@ class Requirement extends Model
         'service_id',
         'class_year',
         'course',
+        'program_id',
         'status',
         'deleted_flag'
     ];
@@ -27,6 +28,11 @@ class Requirement extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'program_id');
     }
 
     public function user_student()

@@ -20,11 +20,13 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'lrn_number',
+        'student_number',
         'email',
         'password',
         'type',
         'phone_number',
         'course',
+        'program_id',
         'address',
         'class_year',
         'status',
@@ -59,6 +61,11 @@ class User extends Authenticatable
     public function requirement_documents()
     {
         return $this->hasMany(RequirementDocument::class);
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class, 'program_id');
     }
     
 }

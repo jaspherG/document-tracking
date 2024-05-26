@@ -1,190 +1,181 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-  <div class="row my-2">
-    <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
-      <div class="card">
-        <div class="card-header pb-0">
-          <div class="row">
-            <div class="col-lg-6 col-7">
-              <h6>Student List</h6>
-            </div>
-            <div class="col-lg-6 col-5 my-auto text-end">
-              <div class="dropdown float-lg-end pe-4">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="card-body px-0 pb-2">
-          <div class="table-responsive">
-            <table class="table align-items-center mb-0">
-              <thead>
-                <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    Name                    
-                  </th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    Students No.
-                  </th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    Description
-                  </th>
-                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                <td class="ps-4"> 
-                  <p class="text-xs font-weight-bold mb-0">Jaspher Gil M. Gutierrez</p> 
-                 </td>
-                  <td class="text-uppercase">  
-                      <p class="text-xs font-weight-bold mb-0">2020-00091-BS-0</p>
-                  </td>
-                  <td class="align-middle text-center text-sm">
-                    <span class="text-xs font-weight-bold"> BSIT</span>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-wrapper w-75 mx-auto">
-                      <div class="progress-info">
-                        <div class="progress-percentage">
-                          <span class="text-xs font-weight-bold">60%</span>
-                        </div>
-                      </div>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
+<div class="row">
+  <div class="col-lg-8 col-md-12 mb-md-0 mb-4">
+    <div class="card">
+        <div id="chart"></div>
+    </div>  
+  </div>
+  <div class="col-lg-4 col-md-12 mb-md-0 mb-4">
+    <div class="row ">
+        <div class="col-lg-6 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-grow-1">
+                    <p class="text-muted fw-medium">Requirements</p>
+                    <h4 class="mb-0">
+                        <div>{{$dashboardData->requirement_count}}</div>
+                    </h4>
                     </div>
-                  </td>
-                </tr>
-                <tr>
-                <tr>
-                <td class="ps-4">
-                <p class="text-xs font-weight-bold mb-0">Jemar Bombales</p> 
-                 </td>
-                  <td class="text-uppercase">  
-                      <p class="text-xs font-weight-bold mb-0">2020-00091-BS-0</p>
-                  </td>
-                  <td class="align-middle text-center text-sm">
-                    <span class="text-xs font-weight-bold"> BSIT</span>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-wrapper w-75 mx-auto">
-                      <div class="progress-info">
-                        <div class="progress-percentage">
-                          <span class="text-xs font-weight-bold">60%</span>
-                        </div>
-                      </div>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                <tr>
-                <td class="ps-4">
-                <p class="text-xs font-weight-bold mb-0">Elija Rotoni</p> 
-                 </td>
-                  <td class="text-uppercase">  
-                      <p class="text-xs font-weight-bold mb-0">2020-00091-BS-0</p>
-                  </td>
-                  <td class="align-middle text-center text-sm">
-                    <span class="text-xs font-weight-bold"> BSIT</span>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-wrapper w-75 mx-auto">
-                      <div class="progress-info">
-                        <div class="progress-percentage">
-                          <span class="text-xs font-weight-bold">60%</span>
-                        </div>
-                      </div>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                <tr>
-                <td class="ps-4">
-                <p class="text-xs font-weight-bold mb-0">Steff Manalo</p> 
-                 </td>
-                  <td class="text-uppercase">  
-                      <p class="text-xs font-weight-bold mb-0">2020-00091-BS-0</p>
-                  </td>
-                  <td class="align-middle text-center text-sm">
-                    <span class="text-xs font-weight-bold"> BSIT</span>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-wrapper w-75 mx-auto">
-                      <div class="progress-info">
-                        <div class="progress-percentage">
-                          <span class="text-xs font-weight-bold">60%</span>
-                        </div>
-                      </div>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                <tr>
-                <td class="ps-4">
-                <p class="text-xs font-weight-bold mb-0">Rosaly Supleo</p> 
-                 </td>
-                  <td class="text-uppercase">  
-                      <p class="text-xs font-weight-bold mb-0">2020-00091-BS-0</p>
-                  </td>
-                  <td class="align-middle text-center text-sm">
-                    <span class="text-xs font-weight-bold"> BSIT</span>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-wrapper w-75 mx-auto">
-                      <div class="progress-info">
-                        <div class="progress-percentage">
-                          <span class="text-xs font-weight-bold">60%</span>
-                        </div>
-                      </div>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                <tr>
-                <td class="ps-4">
-                <p class="text-xs font-weight-bold mb-0">Natsy Dagus</p> 
-                 </td>
-                  <td class="text-uppercase">  
-                      <p class="text-xs font-weight-bold mb-0">2020-00091-BS-0</p>
-                  </td>
-                  <td class="align-middle text-center text-sm">
-                    <span class="text-xs font-weight-bold"> BSIT</span>
-                  </td>
-                  <td class="align-middle">
-                    <div class="progress-wrapper w-75 mx-auto">
-                      <div class="progress-info">
-                        <div class="progress-percentage">
-                          <span class="text-xs font-weight-bold">60%</span>
-                        </div>
-                      </div>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-info w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
 
+                    <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-primary d-flex align-items-center justify-content-center">
+                      <span class="avatar-title">
+                        <i class="fas fa-list text-white"></i>
+                      </span>
+                    </div>
+                </div>
+                </div>
+                <!-- end card-body -->
+            </div>
+        </div>
+        <div class="col-lg-6 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-grow-1">
+                    <p class="text-muted fw-medium">Documents</p>
+                    <h4 class="mb-0">
+                        <div>{{$dashboardData->document_count}}</div>
+                    </h4>
+                    </div>
+
+                    <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-primary d-flex align-items-center justify-content-center">
+                      <span class="avatar-title">
+                      <i class="fas fa-solid fa-file text-white"></i>
+                      </span>
+                    </div>
+                </div>
+                </div>
+                <!-- end card-body -->
+            </div>
+        </div>
+        
+        <div class="col-lg-6 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-grow-1">
+                    <p class="text-muted fw-medium">Admission</p>
+                    <h4 class="mb-0">
+                      <div>{{$dashboardData->admission_count}}</div>
+                    </h4>
+                    </div>
+                    <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-primary d-flex align-items-center justify-content-center">
+                      <span class="avatar-title">
+                          <i class="fas fa-users text-white"></i>
+                      </span>
+                    </div>
+                </div>
+                </div>
+                <!-- end card-body -->
+            </div>
+        </div>
+        <div class="col-lg-6 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-grow-1">
+                    <p class="text-muted fw-medium">Registrar</p>
+                    <h4 class="mb-0">
+                      <div>{{$dashboardData->registrar_count}}</div>
+                    </h4>
+                    </div>
+                    <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-primary d-flex align-items-center justify-content-center">
+                      <span class="avatar-title">
+                          <i class="fas fa-users text-white"></i>
+                      </span>
+                    </div>
+                </div>
+                </div>
+                <!-- end card-body -->
+            </div>
+        </div>
+        <div class="col-lg-6 mb-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                <div class="d-flex">
+                    <div class="flex-grow-1">
+                    <p class="text-muted fw-medium">Students</p>
+                    <h4 class="mb-0">
+                        <div>{{$dashboardData->student_count}}</div>
+                    </h4>
+                    </div>
+
+                    <div class="mini-stat-icon avatar-sm align-self-center rounded-circle bg-primary d-flex align-items-center justify-content-center">
+                      <span class="avatar-title">
+                          <i class="fas fa-users text-white"></i>
+                      </span>
+                    </div>
+                </div>
+                </div>
+                <!-- end card-body -->
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    var options = {
+        series: [ {
+            name: 'Completed',
+            data: [/* Completed requirements count for each category */]
+        }, {
+            name: 'Deficient',
+            data: [/* Deficient requirements count for each category */]
+        }],
+        chart: {
+            type: 'bar',
+            height: 350,
+            stacked: true,
+            stackType: '100%'
+        },
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                legend: {
+                    position: 'bottom',
+                    offsetX: -10,
+                    offsetY: 0
+                }
+            }
+        }],
+        plotOptions: {
+          bar: {
+            borderRadius: 10,
+            borderRadiusApplication: 'end',
+            borderRadiusWhenStacked: 'last',
+          },
+        },
+        xaxis: {
+            categories: ['Admission', 'Returnee', 'Transferee', 'Cross-enroll']
+        },
+        fill: {
+            opacity: 1
+        },
+        legend: {
+            position: 'right',
+            offsetX: 0,
+            offsetY: 50
+        },
+    };
+  
+    // PHP code in Blade template:
+    @php
+        $completedCounts = $dashboardData->completed_data;
+        $deficientCounts = $dashboardData->deficient_data;
+    @endphp
+
+    options.series[1].data = @json($deficientCounts);
+    options.series[0].data = @json($completedCounts);
+    
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    chart.render();
+</script>
+    
 @endsection
 @push('dashboard')
 @endpush

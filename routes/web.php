@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/', [HomeController::class, 'home']);
+  Route::get('/', [HomeController::class, 'home']);
 	Route::get('dashboard', [HomeController::class, 'viewDashboard'])->name('dashboard');
 
 	Route::get('sample-page-registrar', [HomeController::class, 'samplePageRegistrar'])->name('sample-page-registrar');
@@ -47,31 +47,30 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('transferee', [HomeController::class, 'transferee'])->name('transferee');
 	Route::get('transferee/{id}', [HomeController::class, 'editTransferee'])->name('edit.transferee');
 
-	Route::get('cross-enroll', [HomeController::class, 'CrossEnroll'])->name('Cross-Enroll');
+	Route::get('cross-enroll', [HomeController::class, 'CrossEnroll'])->name('cross-enroll');
 	Route::get('cross-enroll/{id}', [HomeController::class, 'editCrossEnroll'])->name('edit.cross-enroll');
 
-	Route::get('BSIT', function (Request $request) {
-		$user = $request->user();
-		return view('BSIT', compact(['user']));
-	})->name('BSIT');
+	Route::get('program/{id}', [HomeController::class, 'program'])->name('program');
 
-	Route::get('BSED-MT', function (Request $request) {
-		$user = $request->user();
-		return view('BSED-MT', compact(['user']));
-	})->name('BSED-MT');
+	// Route::get('BSIT', function (Request $request) {
+	// 	$user = $request->user();
+	// 	return view('BSIT', compact(['user']));
+	// })->name('BSIT');
 
-	Route::get('BSED-EN', function (Request $request) {
-		$user = $request->user();
-		return view('BSED-EN', compact(['user']));
-	})->name('BSED-EN');
+	// Route::get('BSED-MT', function (Request $request) {
+	// 	$user = $request->user();
+	// 	return view('BSED-MT', compact(['user']));
+	// })->name('BSED-MT');
 
-	Route::get('BPA', function (Request $request) {
-		$user = $request->user();
-		return view('BPA', compact(['user']));
-	})->name('BPA');
+	// Route::get('BSED-EN', function (Request $request) {
+	// 	$user = $request->user();
+	// 	return view('BSED-EN', compact(['user']));
+	// })->name('BSED-EN');
 
-
-	
+	// Route::get('BPA', function (Request $request) {
+	// 	$user = $request->user();
+	// 	return view('BPA', compact(['user']));
+	// })->name('BPA');
 
   Route::get('static-sign-in', function () {
 		return view('laravel-examples/user-management');
@@ -86,10 +85,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/user-profile', [InfoUserController::class, 'create']);
 	Route::post('/user-profile', [InfoUserController::class, 'store']);
 	Route::put('/user-profile', [InfoUserController::class, 'update']);
+	Route::post('/user-delete', [InfoUserController::class, 'destroy']);
 
 	// save requirement
 	Route::post('/requirement', [HomeController::class, 'storeRequirement'])->name('store.requirement');
 	Route::put('/requirement', [HomeController::class, 'updateRequirement'])->name('update.requirement');
+
+	Route::get('/student-management/{id}', [HomeController::class, 'showServiceManagement'])->name('show.requirements');
 });
 
 Route::group(['middleware' => 'guest'], function () {
@@ -104,4 +106,8 @@ Route::group(['middleware' => 'guest'], function () {
 	Route::get('/reset-password/{token}', [ResetController::class, 'resetPass'])->name('password.reset');
 	Route::post('/reset-password', [ChangePasswordController::class, 'changePassword'])->name('password.update');
 
+});
+
+Route::prefix('html-function')->group(function(){
+  Route::get('{id}', [HomeController::class, 'htmlFunctions'])->name('html-functions');
 });

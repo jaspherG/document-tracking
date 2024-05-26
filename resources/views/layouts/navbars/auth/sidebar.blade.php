@@ -22,9 +22,9 @@
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 alert alert-dark mx-4 role=alert text-white text-center text-primary">Student Management</h6>
       </li>
       <li class="nav-item pb-2">
-        <a class="nav-link {{ (Request::is('student-management') ? 'active' : '') }}" href="{{ url('student-management') }}">
+        <a class="nav-link {{ ($_page == 'Student Management' ? 'active' : '') }}" href="{{ url('student-management') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                <i style="font-size: 1rem;" class="fas fa-address-book ps-2 pe-2 text-center text-dark {{ (Request::is('student-management') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+                <i style="font-size: 1rem;" class="fas fa-address-book ps-2 pe-2 text-center text-dark {{ ($_page == 'Student Management' ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
             </div>
             <span class="nav-link-text ms-1">Student Management</span>
         </a>
@@ -43,7 +43,7 @@
       <li class="nav-item">
         <a class="nav-link {{ ($_page == 'Admission' ? 'active' : '') }}" href="{{ url('admission') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ (Request::is('admission') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Admission' ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
           </div>
           <span class="nav-link-text ms-1">Admission</span>
         </a>
@@ -51,7 +51,7 @@
       <li class="nav-item">
         <a class="nav-link {{ ($_page == 'Returnee'  ? 'active' : '') }} " href="{{ url('re-admission') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ (Request::is('re-admission') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Returnee' ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
           </div>
           <span class="nav-link-text ms-1">Returnee</span>
         </a>  
@@ -59,7 +59,7 @@
       <li class="nav-item">
         <a class="nav-link  {{ ($_page == 'Transferee' ? 'active' : '') }}" href="{{ url('transferee') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ (Request::is('transferee') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Transferee' ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
           </div>
           <span class="nav-link-text ms-1">Transferee</span>
         </a>
@@ -67,7 +67,7 @@
       <li class="nav-item">
         <a class="nav-link  {{ ($_page == 'Cross-enroll' ? 'active' : '') }}" href="{{ url('cross-enroll') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ (Request::is('cross-enroll') ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Cross-enroll' ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
           </div>
           <span class="nav-link-text ms-1">Cross-Enroll</span>
         </a>

@@ -83,7 +83,17 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="course" class="form-control-label">{{ __('Course') }} <b class="text-danger">*</b></label>
-                                    <input required class="form-control @error('course') border-danger @enderror" type="text" placeholder="Course" id="course" name="course" value="{{ old('course') ?? $formData->user_student->course }}" >
+                                    @php
+                                        $c_year = old('course') ?? $formData->user_student->program_id;
+                                    @endphp
+                                    <select required class="form-control form-select @error('course') border-danger @enderror" type="text" id="course" name="course">
+                                        <option value="">-- select course --</option>  
+                                        @if(isset($programs) && count($programs) > 0)
+                                            @foreach($programs as $program)
+                                                <option value="{{ $program->id}}" {{ $c_year == $program->id ? 'selected' : '' }}>{{$program->program_name}}</option>  
+                                            @endforeach
+                                        @endif
+                                    </select>
                                     @error('course')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror

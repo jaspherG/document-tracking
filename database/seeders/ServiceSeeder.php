@@ -24,7 +24,7 @@ class ServiceSeeder extends Seeder
             'document_ids' => json_encode([16,17,18,19]), 
             ],
             [ 'service_name' => 'cross-enroll',
-            'document_ids' => json_encode([20,21,22,23,24]), 
+            'document_ids' => json_encode([20,21,22,23]), 
             ],
         ];
 

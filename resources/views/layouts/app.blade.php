@@ -21,6 +21,7 @@
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-AWe0I5vVpFY4Fgo7GU85L6oN/e6jvHkX4bXC5ZzBzw+ndEw/q4oxeFpdnKmnv2ZZ9J7F08m7JFDrx4BW8jq+1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="../assets/css/docu2.css?v=1.0.3" rel="stylesheet" />
@@ -36,7 +37,7 @@
     <div x-data="{ show: true}"
         x-init="setTimeout(() => show = false, 4000)"
         x-show="show"
-        class="position-fixed bg-success rounded right-3 text-sm py-2 px-4">
+        class="position-fixed bg-success rounded right-3 text-sm py-2 px-4 bottom-0 m-3" style="z-index: 99999; ">
       <p class="m-0">{{ session('success')}}</p>
     </div>
   @endif

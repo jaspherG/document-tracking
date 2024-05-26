@@ -124,6 +124,15 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="student_number" class="form-control-label">{{ __('Student No.') }}</label>
+                                    <input  class="form-control @error('student_number') border-danger @enderror" type="text" placeholder="Student ID Number" id="student_number" name="student_number" value="{{ old('student_number') ?? $formData->student_number }}" >
+                                    @error('student_number')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="image" class="form-control-label">{{ __('Profile Photo') }} </label>
                                     <input  class="form-control @error('image') border-danger @enderror" type="file" placeholder="Profile Photo" id="image" name="image" >
                                     @error('image')
