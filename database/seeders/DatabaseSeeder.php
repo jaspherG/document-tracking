@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             DocumentSeeder::class,
             ServiceSeeder::class,
+            ProgramSeeder::class
         ]);
     }
 }

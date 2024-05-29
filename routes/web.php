@@ -11,6 +11,7 @@ use App\Http\Controllers\InfoUserController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\ResetController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
@@ -51,12 +52,17 @@ Route::middleware([CheckAuthAdmin::class])->group(function () {
 	// save requirement
 	Route::post('/requirement', [HomeController::class, 'storeRequirement'])->name('store.requirement');
 	Route::put('/requirement', [HomeController::class, 'updateRequirement'])->name('update.requirement');
+
+	// report 
+	Route::get('service-export', [ReportController::class, 'exportService'])->name('service.export');
 });
 
 Route::group(['middleware' => 'auth'], function () {
 
   Route::get('/', [HomeController::class, 'home']);
 	Route::get('dashboard', [HomeController::class, 'viewDashboard'])->name('dashboard');
+
+	Route::get('reports', [HomeController::class, 'report'])->name('reports');
 
 	Route::get('profile', [HomeController::class, 'profile'])->name('profile');
 

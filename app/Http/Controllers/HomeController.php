@@ -23,6 +23,42 @@ class HomeController extends Controller
         return redirect('dashboard');
     }
 
+    public function report()
+    {
+        $user = Auth::user();
+        $services = Service::select('id', 'service_name')->get();
+        $academic_years = Requirement::distinct()->pluck('academic_year');
+        $service = Service::with(['requirements.user_student', 'requirements.requirement_documents.document'])
+                          ->where('id', 1)
+                          ->first();
+        // Prepare headers
+        $header_rows = ['Student Number', 'Student Name'];
+        if ($service->requirements->isNotEmpty()) {
+            $documents = $service->requirements->first()->requirement_documents;
+            foreach($documents as $document) {
+                $header_rows[] =  $document->document->document_name;
+            }
+        }
+
+        // Prepare data rows
+        $table_data = [];
+        foreach ($service->requirements as $requirement) {
+            $rowData = [
+                'student_number' => $requirement->user_student->student_number,
+                'name' => $requirement->user_student->name,
+            ];
+
+            foreach ($requirement->requirement_documents as $document) {
+                $rowData['documents'][] = $document->status == 1 ? 'Complete' : '';
+            }
+
+            $table_data[] = $rowData;
+        }
+        
+        return view('reports', compact(['user', 'services', 'academic_years', 'table_data', 'header_rows']))->with('_page', 'reports');
+    }
+
+
     public function viewDashboard(){
         $user = Auth::user();
         if($user->type == 'Admission'){
@@ -46,14 +82,19 @@ class HomeController extends Controller
     }
 
     private function registrarDashboardData(){
-        $allUsers = User::where('status', 'ACTIVE')->where('deleted_flag', 0)->whereNotNull('course')->get();
+       // Fetch the programs with the count of active students
+        $programs = Program::withCount(['students' => function($query) {
+            $query->where('status', 'ACTIVE')->where('deleted_flag', 0);
+        }])->get();
 
-        $userCountsPerCourse = $allUsers->groupBy('course')->map(function($group) {
-            return $group->count();
-        });
+        // Prepare the data for the pie chart
+        $pie_categories = [];
+        $pie_data = [];
 
-        $pie_categories = $userCountsPerCourse->keys()->all();
-        $pie_data = $userCountsPerCourse->values()->all();
+        foreach ($programs as $program) {
+            $pie_categories[] = $program->program_name;
+            $pie_data[] = $program->students_count;
+        }
         
         $requirements = Requirement::where('deleted_flag', 0)->count();
         $documents = RequirementDocument::where('status', 1)->count();
@@ -111,8 +152,9 @@ class HomeController extends Controller
 
     public function StudentManagement(){
         $user = Auth::user();
+        $academic_years = Requirement::distinct()->pluck('academic_year');
         $serviceData = $this->getServiceStudentRequirements();
-        return view('StudentManagement', compact(['user', 'serviceData']))->with('_page', 'Student Management')->with('_service', 0)->with('_completed', 1)->with('_deficiency', 1)->with('service', 'All');
+        return view('StudentManagement', compact(['user', 'serviceData', 'academic_years']))->with('_page', 'Student Management')->with('_service', 0)->with('_completed', 1)->with('_deficiency', 1)->with('service', 'All');
     }
 
     public function showServiceManagement(Request $request, string $id){
@@ -138,11 +180,12 @@ class HomeController extends Controller
             $status = $request->status == 'completed' ? 'Completed' : 'Deficiency';
         }
         $user = Auth::user();
+        $academic_years = Requirement::distinct()->pluck('academic_year');
         $serviceData = $this->getServiceStudentRequirements($id, $status);
-        return view('StudentManagement', compact(['user', 'serviceData']))->with('_page', 'Student Management')->with('_service', $id)->with('_completed', $completed)->with('_deficiency', $deficiency)->with('service', $service);
+        return view('StudentManagement', compact(['user', 'serviceData', 'academic_years']))->with('_page', 'Student Management')->with('_service', $id)->with('_completed', $completed)->with('_deficiency', $deficiency)->with('service', $service);
     }
 
-    private function getServiceStudentRequirements($serviceId='', $status='', $filter_text='') {
+    private function getServiceStudentRequirements($serviceId='', $status='', $filter_text='', $academic_year='') {
         $allRequirement = Requirement::with(['user_student', 'service', 'requirement_documents'])
         ->whereHas('user_student', function($q) {
             $q->where('status', 'ACTIVE');
@@ -169,6 +212,9 @@ class HomeController extends Controller
                       ->orWhere('class_year', 'like', $filterText)
                       ->orWhere('course', 'like', $filterText);
             });
+        }
+        if(!empty($academic_year)) {
+            $requirement->where('academic_year', $academic_year);
         }
         $requirement = $requirement->orderByDesc('updated_at')
         ->get();
@@ -269,6 +315,10 @@ class HomeController extends Controller
         $programs = Program::all();
         $formData = Requirement::with(['user_student', 'service', 'requirement_documents'])->where('id', $id)->where('service_id', 4)->first();
         if($formData){
+            $academic_year = explode('-', $formData->academic_year);
+            $formData->academic_year_1 = $academic_year[0];
+            $formData->academic_year_2 = $academic_year[1];
+
             $admission = Service::findOrFail(4); // 1 = admission
             if ($admission) {
                 $documentIds = json_decode($admission->document_ids);
@@ -301,6 +351,10 @@ class HomeController extends Controller
         $programs = Program::all();
         $formData = Requirement::with(['user_student', 'service', 'requirement_documents'])->where('id', $id)->where('service_id', 3)->first();
         if($formData){
+            $academic_year = explode('-', $formData->academic_year);
+            $formData->academic_year_1 = $academic_year[0];
+            $formData->academic_year_2 = $academic_year[1];
+
             $admission = Service::findOrFail(3); // 3 = admission
             if ($admission) {
                 $documentIds = json_decode($admission->document_ids);
@@ -332,6 +386,10 @@ class HomeController extends Controller
         $programs = Program::all();
         $formData = Requirement::with(['user_student', 'service', 'requirement_documents'])->where('id', $id)->where('service_id', 1)->first();
         if($formData){
+            $academic_year = explode('-', $formData->academic_year);
+            $formData->academic_year_1 = $academic_year[0];
+            $formData->academic_year_2 = $academic_year[1];
+
             $admission = Service::findOrFail(1); // 1 = admission
             if ($admission) {
                 $documentIds = json_decode($admission->document_ids);
@@ -364,6 +422,10 @@ class HomeController extends Controller
         $programs = Program::all();
         $formData = Requirement::with(['user_student', 'service', 'requirement_documents'])->where('id', $id)->where('service_id', 2)->first();
         if($formData){
+            $academic_year = explode('-', $formData->academic_year);
+            $formData->academic_year_1 = $academic_year[0];
+            $formData->academic_year_2 = $academic_year[1];
+
             $admission = Service::findOrFail(2); // 1 = admission
             if ($admission) {
                 $documentIds = json_decode($admission->document_ids);
@@ -387,7 +449,10 @@ class HomeController extends Controller
             'address' => 'required|string',
             'course' => 'required|exists:programs,id',
             'class_year' => 'required|string',
+            'academic_year_1' => 'required|numeric',
+            'academic_year_2' => 'required|numeric',
             'lrn_number' => 'required|string',
+            'student_number' => 'required|string',
             'remarks_name' => 'required|string',
             'remarks_email' => 'required|email|string',
         ]);
@@ -408,6 +473,7 @@ class HomeController extends Controller
         $program = Program::findOrFail($validated['course']);
         $validated['program_id'] = $validated['course'];
         $validated['course'] = $program->program_name;
+        $validated['academic_year'] = $validated['academic_year_1'].'-'.$validated['academic_year_2'];
 
         if (!$student) {
             // Create a new user if no user with the same LRN or email is found
@@ -421,6 +487,7 @@ class HomeController extends Controller
                 $new_requirement->user_id = $user->id;
                 $new_requirement->student_id = $student->id;
                 $new_requirement->class_year = $validated['class_year'];
+                $new_requirement->academic_year = $validated['academic_year'];
                 $new_requirement->course = $validated['course'];
                 $new_requirement->program_id = $validated['program_id'];
                 $new_requirement->status = $requirement_status;
@@ -465,6 +532,7 @@ class HomeController extends Controller
             $new_requirement->user_id = $user->id;
             $new_requirement->student_id = $student->id;
             $new_requirement->class_year = $validated['class_year'];
+            $new_requirement->academic_year = $validated['academic_year'];
             $new_requirement->course = $validated['course'];
             $new_requirement->program_id = $validated['program_id'];
             $new_requirement->status = $requirement_status;
@@ -527,7 +595,10 @@ class HomeController extends Controller
             'address' => 'required|string',
             'course' => 'required|exists:programs,id',
             'class_year' => 'required|string',
+            'academic_year_1' => 'required|numeric',
+            'academic_year_2' => 'required|numeric',
             'lrn_number' => 'required|string',
+            'student_number' => 'required|string',
             'remarks_name' => 'required|string',
             'remarks_email' => 'required|email|string',
         ]);
@@ -543,6 +614,8 @@ class HomeController extends Controller
         $program = Program::findOrFail($validated['course']);
         $validated['program_id'] = $validated['course'];
         $validated['course'] = $program->program_name;
+        $validated['academic_year'] = $validated['academic_year_1'].'-'.$validated['academic_year_2'];
+        
         
         // Check if the user with the same LRN or email already exists
         $student = User::findOrFail($validated['student_id']);
@@ -552,6 +625,7 @@ class HomeController extends Controller
 
             $res_requirement = Requirement::findOrFail($validated['requirement_id']);
             $res_requirement->class_year = $validated['class_year'];
+            $res_requirement->academic_year = $validated['academic_year'];
             $res_requirement->course = $validated['course'];
             $res_requirement->program_id = $validated['program_id'];
             $res_requirement->status = $requirement_status;
@@ -630,7 +704,7 @@ class HomeController extends Controller
                     $status = 'Completed';
                 }
                 $user = Auth::user();
-                $serviceData = $this->getServiceStudentRequirements($request->filter_service, $status, $request->filter_text);
+                $serviceData = $this->getServiceStudentRequirements($request->filter_service, $status, $request->filter_text, $request->filter_academic_year);
                 $requirements = $serviceData->requirements;
                 return view('components.filter-student-management-list', compact('requirements'))->render();
             } else if ($id === 'get-student-requirements-data') {
@@ -651,6 +725,31 @@ class HomeController extends Controller
                 }
                 $students =  $students->get();
                 return view('components.filter-program-student-list', compact('students'))->render();
+            } else if ($id === 'get-filtered-report-data') {
+                
+                $service = Service::with(['requirements.user_student', 'requirements.requirement_documents.document']);
+                if(!empty($request->academic_year)){
+                    $service->with(['requirements' => function($q) use ($request) {
+                        $q->where('academic_year', $request->academic_year);
+                    }]);
+                }
+                $service = $service->where('id', $request->service_id)->first();
+
+                // Prepare data rows
+                $table_data = [];
+                foreach ($service->requirements as $requirement) {
+                    $rowData = [
+                        'student_number' => $requirement->user_student->student_number,
+                        'name' => $requirement->user_student->name,
+                    ];
+
+                    foreach ($requirement->requirement_documents as $document) {
+                        $rowData['documents'][] = $document->status == 1 ? 'Complete' : '';
+                    }
+
+                    $table_data[] = $rowData;
+                }
+                return view('components.filtered-report-table-data', compact('table_data'))->render();
             }
         } 
     }
@@ -670,10 +769,21 @@ class HomeController extends Controller
     }
 
     private function emptyFormData($student_id=''){
+        $requirement = Requirement::latest()->first();
+
         $formData = new \stdClass();
         $formData->course = '';
         $formData->program_id = '';
         $formData->class_year = '';
+        $formData->academic_year_1 = '';
+        $formData->academic_year_2 = '';
+        $formData->class_year = '';
+
+        if($requirement){
+            $academic_year = explode('-', $requirement->academic_year);
+            $formData->academic_year_1 = $academic_year[0];
+            $formData->academic_year_2 = $academic_year[1];
+        }
 
 
         $user_data = new \stdClass();
@@ -682,6 +792,7 @@ class HomeController extends Controller
         $user_data->phone_number = '';
         $user_data->address = '';
         $user_data->lrn_number = '';
+        $user_data->student_number = '';
        
 
         if(!empty($student_id)){
@@ -691,6 +802,7 @@ class HomeController extends Controller
             $user_data->phone_number = $student->phone_number;
             $user_data->address = $student->address;
             $user_data->lrn_number = $student->lrn_number;
+            $user_data->student_number = $student->student_number;
 
             $formData->course = $student->course;
             $formData->program_id = $student->program_id;

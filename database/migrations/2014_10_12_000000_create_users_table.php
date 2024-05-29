@@ -23,8 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('type', ['Registrar', 'Admission', 'Student'])->default('Registrar');
             $table->string('phone_number')->nullable();
-            $table->string('course', 15);
-            $table->foreignIdFor(\App\Models\Program::class,'program_id');
+            $table->string('course', 15)->nullable();
+            $table->foreignIdFor(\App\Models\Program::class,'program_id')->nullable();
             $table->string('address')->nullable();
             $table->enum('class_year', ['First Year', 'Second Year', 'Third Year', 'Fourth Year'])->nullable();
             $table->string('image', 225)->nullable();

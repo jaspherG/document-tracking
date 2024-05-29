@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class,'student_id');
             $table->foreignIdFor(\App\Models\Service::class,'service_id'); // service type
             $table->enum('class_year', ['First Year', 'Second Year', 'Third Year', 'Fourth Year']);
+            $table->string('academic_year', 20);
             $table->string('course', 15);
             $table->foreignIdFor(\App\Models\Program::class,'program_id');
             $table->enum('status',['Completed','Deficiency'])->default('Deficiency');

@@ -19,6 +19,7 @@ class Requirement extends Model
         'student_id',
         'service_id',
         'class_year',
+        'academic_year',
         'course',
         'program_id',
         'status',

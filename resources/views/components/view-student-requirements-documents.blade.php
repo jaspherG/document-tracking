@@ -26,6 +26,9 @@
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                       Completion
                     </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                      Academic Year
+                    </th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
                       Action
                     </th>
@@ -51,6 +54,7 @@
                             </div>
                           </div>
                         </td>
+                        <td class="ps-4">{{$requirement->academic_year}}</td>
                         <td class="text-center"> 
                           <a data-bs-toggle="collapse" href="#collapseExample{{$requirement->id}}" role="button" aria-expanded="false" aria-controls="collapseExample" class="" data-bs-toggle="tooltip" data-bs-original-title="View Documents">
                               <i class="fas fa-file text-secondary"></i>
@@ -132,6 +136,9 @@
                       Document
                     </th>
                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                      Academic Year
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                       Image
                     </th>
                   </tr>
@@ -142,6 +149,7 @@
                       <tr class="table-row">
                         <td class="ps-4">{{ucfirst($document->service->service_name)}}</td>
                         <td class="ps-4">{{$document->document->document_name}}</td>
+                        <td class="ps-4">{{$document->requirement->academic_year}}</td>
                         <td class="align-middle text-center">
                             <div class="d-flex align-items-center justify-content-start gap-2">
                                 @if(isset($document->image ) && !empty($document->image))

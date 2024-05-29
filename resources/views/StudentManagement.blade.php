@@ -88,15 +88,32 @@
                     @endif
                   Requirements</h5>
               </div>
-              <!-- filtered category -->
-              <input type="hidden" class="service_category" value="{{$_service}}">
-              <input type="hidden" class="completed_category" value="{{$_completed}}">
-              <input type="hidden" class="deficient_category" value="{{$_deficiency}}">
-              <div class=" d-flex align-items-center">
-                  <div class="input-group">
-                      <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                      <input type="text" class="form-control filter-input" placeholder="Type here...">
+              <div class="d-flex gap-2">
+               <div class="row">
+                <div class="col-md-6">
+                  <select required class="form-control filter-academic-year form-select @error('class_year') border-danger @enderror "  type="text" id="class_year" name="class_year">
+                      <option value="">Filter academic year </option>  
+                      @if(isset($academic_years) && count($academic_years) > 0)
+                        @foreach($academic_years as $academic_year)
+                          <option value="{{ $academic_year }}" >{{$academic_year}}</option>  
+                        @endforeach
+                      @endif
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <div class=" d-flex align-items-center">
+                      <div class="input-group">
+                          <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                          <input type="text" class="form-control filter-input" placeholder="Type here...">
+                      </div>
                   </div>
+                </div>
+               </div>
+               
+                <!-- filtered category -->
+                <input type="hidden" class="service_category" value="{{$_service}}">
+                <input type="hidden" class="completed_category" value="{{$_completed}}">
+                <input type="hidden" class="deficient_category" value="{{$_deficiency}}">
               </div>
           </div>
       </div>
@@ -105,6 +122,7 @@
           <table class="table align-items-center mb-0 table-hover ">
             <thead>
                 <tr>
+                  <th></th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Name                    
                   </th>
@@ -121,14 +139,18 @@
                     Completion
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                    Academic Year
+                  </th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Action
                   </th>
                 </tr>
               </thead>
               <tbody id="table_body">
                 @if(count($serviceData->requirements) > 0)
-                  @foreach($serviceData->requirements as $requirement) 
+                  @foreach($serviceData->requirements as $key => $requirement) 
                     <tr class="table-row">
+                      <td>{{ $key += 1}}</td>
                       <td class="ps-4">{{$requirement->user_student->name}}</td>
                       <td class="ps-4">{{$requirement->user_student->student_number}}</td>
                       <td class="ps-4">{{$requirement->course}}</td>
@@ -146,6 +168,7 @@
                           </div>
                         </div>
                       </td>
+                      <td class="ps-4">{{$requirement->academic_year}}</td>
                       <td class="text-center"> 
                         <a href="/{{$requirement->service->service_name}}/{{$requirement->id}}" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit Requirement">
                             <i class="fas fa-edit text-secondary"></i>
@@ -187,10 +210,29 @@
 
       $(document).on('input', '.filter-input', function(){
             var text = $(this).val();
+            var academic_year = $('.filter-academic-year').val();
             var service = $('.service_category').val();
             var completed = $('.completed_category').val();
             var deficient = $('.deficient_category').val();
             $.get("{{ route('html-functions', ['id' => 'get-filtered-student-management-list']) }}", {
+                filter_academic_year: academic_year,
+                filter_service: service,
+                filter_completed: completed,
+                filter_deficient: deficient,
+                filter_text: text,
+            }, function(html) {
+                $('#table_body').html(html);
+            });
+        });
+
+        $(document).on('input', '.filter-academic-year', function(){
+            var academic_year = $(this).val();
+            var text = $('.filter-input').val();
+            var service = $('.service_category').val();
+            var completed = $('.completed_category').val();
+            var deficient = $('.deficient_category').val();
+            $.get("{{ route('html-functions', ['id' => 'get-filtered-student-management-list']) }}", {
+                filter_academic_year: academic_year,
                 filter_service: service,
                 filter_completed: completed,
                 filter_deficient: deficient,

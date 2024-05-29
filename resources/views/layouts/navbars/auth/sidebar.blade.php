@@ -8,7 +8,7 @@
     </a>
   </div>
   <hr class="horizontal dark mt-3">
-  <div class="collapse navbar-collapse  w-auto" id="sidenav-collapse-main">
+  <div class="collapse navbar-collapse  w-auto vh-100" id="sidenav-collapse-main">
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link {{ (Request::is('dashboard') ? 'active' : '') }}" href="{{ url('dashboard') }}">
@@ -74,6 +74,18 @@
       </li>
       <li class="nav-link mb-0">
       </li>
+      <li class="nav-item mt-2">
+        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 alert alert-dark mx-4 role=alert text-white text-center text-primary">Reports</h6>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link  {{ ($_page == 'reports' ? 'active' : '') }}" href="{{ url('reports') }}">
+          <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+          <i style="font-size: 1rem;" class="fas fa-table ps-2 pe-2 text-center text-dark {{ ($_page == 'reports' ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
+          </div>
+          <span class="nav-link-text ms-1">Report list</span>
+        </a>
+      </li>
+   
     </ul>
   </div>
 </aside>

@@ -37,7 +37,6 @@ class DocumentSeeder extends Seeder
             ['document_name' => 'Curriculum Sheet'],
             ['document_name' => 'Request student'],
             ['document_name' => 'Cross Enroll Form'],
-            ['document_name' => 'Curriculum Sheet']
         ];
 
         DB::table('documents')->insert($documents);

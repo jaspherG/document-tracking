@@ -119,6 +119,15 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="student_number" class="form-control-label">{{ __('Student No.') }}</label>
+                                    <input  class="form-control @error('student_number') border-danger @enderror" type="text" placeholder="Student ID Number" id="student_number" name="student_number" value="{{ old('student_number') ?? $formData->user_student->student_number }}" >
+                                    @error('student_number')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label for="lrn_number" class="form-control-label">{{ __('LRN') }} <b class="text-danger">*</b></label>
                                     <input required class="form-control @error('lrn_number') border-danger @enderror" type="text" placeholder="LRN" id="lrn_number" name="lrn_number" value="{{ old('lrn_number') ?? $formData->user_student->lrn_number }}" >
                                     @error('lrn_number')
@@ -135,7 +144,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                            <h6 class="font-weight-bolder alert alert-dark mx-10 role=alert text-white text-center text-primary">Student Requirements for Freshmen</h6>
+                            <h6 class="font-weight-bolder alert alert-dark mx-10 role=alert text-white text-center text-primary">Student Requirements for Cross-Enroll</h6>
                     </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -215,6 +224,25 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <div class="row">
+                            <label for="" class="form-control-label">{{ __('Academic Year:') }} <b class="text-danger">*</b></label>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input required type="number" id="academic_year_1" class="form-control  @error('academic_year_1') border-danger @enderror" placeholder="Input year" name="academic_year_1" min="2023" max="2100" value="{{ old('academic_year_1') ?? $formData->academic_year_1 }}">
+                                    @error('academic_year_1')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input required type="number" id="academic_year_2" class="form-control  @error('academic_year_2') border-danger @enderror"  placeholder="Input year" name="academic_year_2" min="2023" max="2100" value="{{ old('academic_year_2') ?? $formData->academic_year_2 }}">
+                                    @error('academic_year_2')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">

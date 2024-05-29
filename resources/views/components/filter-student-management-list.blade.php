@@ -1,6 +1,7 @@
 @if(count($requirements) > 0)
-  @foreach($requirements as $requirement) 
+  @foreach($requirements as $key => $requirement) 
     <tr class="table-row">
+      <td>{{ $key += 1}}</td>
       <td class="ps-4">{{$requirement->user_student->name}}</td>
       <td class="ps-4">{{$requirement->user_student->student_number}}</td>
       <td class="ps-4">{{$requirement->user_student->course}}</td>
@@ -18,6 +19,7 @@
           </div>
         </div>
       </td>
+      <td class="ps-4">{{$requirement->academic_year}}</td>
       <td class="text-center"> 
         <a href="/{{$requirement->service->service_name}}/{{$requirement->id}}" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit Requirement">
             <i class="fas fa-edit text-secondary"></i>
