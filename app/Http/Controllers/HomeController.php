@@ -287,9 +287,9 @@ class HomeController extends Controller
         return view('Student-List', compact(['user', 'students']))->with('_page', 'Student List');
     }
 
-    public function editStudent(string $id) {
+    public function editStudent(Request $request) {
         $user = Auth::user();
-        $formData = User::findOrFail($id);
+        $formData = User::findOrFail($request->id);
         if($formData){
             return view('student-edit-form', compact(['user', 'formData']))->with('_page', 'Edit Student');
         }

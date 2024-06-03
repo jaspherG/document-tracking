@@ -20,7 +20,37 @@ class ReportController extends Controller
     */
     public function exportService(Request $request) 
     {
+        $data = $this->serviceReportData($request);
+        return response()->json(['data'=> $data->tableData, 'title'=> $data->title, 'year'=> $data->year]);
+    }
 
+    public function generateReport(Request $request) {
+        $data = new \stdClass();
+        $data->title = '';
+        $data->tableData = [];
+        $data->year = '';
+        if(!isset($request->id)){
+            abort(404);
+        } else if($request->id === 'admin-service-report') {
+            // $data = $this->serviceReportData($request);
+            // $description =  $data->year;
+            // $title =  $data->title;
+            // $tableData =  $data->tableData;
+            $data = $this->serviceReportData($request);
+        }
+        // $description =  $data->year;
+        // $title =  $data->title;
+        // $tableData =  $data->tableData;
+
+        $title =  $data->title;
+        $tableData =  $data->tableData;
+        $description =  "Academic Year: ".$data->year;
+        return view('print.report', compact('tableData', 'title', 'description'))->with('_page', 'print report');
+    }
+    
+
+
+    private function serviceReportData($request) {
         $service = Service::with(['requirements.user_student', 'requirements.requirement_documents.document']);
         if(!empty($request->academic_year)){
             $service->with(['requirements' => function($q) use ($request) {
@@ -59,8 +89,13 @@ class ReportController extends Controller
 
             $tableData[] = $rowData;
         }
-        
-        return response()->json(['data'=>$tableData, 'title'=>ucfirst($service->service_name), 'year'=> $year]);
+
+        $data = new \stdClass();
+
+        $data->tableData = $tableData;
+        $data->title = ucfirst($service->service_name);
+        $data->year = $year;
+
+        return $data;
     }
-    
 }

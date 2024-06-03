@@ -17,13 +17,13 @@
 
 </style>
 @section('content')
-<div class="row">
+<div class="row d-none ">
   <div class="col-12 mb-md-0  d-flex align-items-center justify-content-center gap-2 pt-2">
-      <a href="{{ route('show.requirements', ['id' => 'All'] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 0 ? 'active' : '') }}">All</a>
-      <a href="{{ route('show.requirements', ['id' => 'Admission'] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 1 ? 'active' : '') }}">Admission</a>
-      <a href="{{ route('show.requirements', ['id' => 'Returnee'] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 2 ? 'active' : '') }}">Returnee</a>
-      <a href="{{ route('show.requirements', ['id' => 'Transferee'] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 3 ? 'active' : '') }}">Transferee</a>
-      <a href="{{ route('show.requirements', ['id' => 'Cross-enroll'] ) }}" class="btn btn-sm btn-outline-primary {{ ($_service == 4 ? 'active' : '') }}">Cross-enroll</a>
+      <a href="{{ route('show.requirements', ['id' => 'All'] ) }}" class="btn btn-sm btn-outline-primary d-none {{ ($_service == 0 ? 'active' : '') }}">All</a>
+      <a href="{{ route('show.requirements', ['id' => 'Admission'] ) }}" class="btn btn-sm btn-outline-primary d-none {{ ($_service == 1 ? 'active' : '') }}">Admission</a>
+      <a href="{{ route('show.requirements', ['id' => 'Returnee'] ) }}" class="btn btn-sm btn-outline-primary d-none {{ ($_service == 2 ? 'active' : '') }}">Returnee</a>
+      <a href="{{ route('show.requirements', ['id' => 'Transferee'] ) }}" class="btn btn-sm btn-outline-primary d-none {{ ($_service == 3 ? 'active' : '') }}">Transferee</a>
+      <a href="{{ route('show.requirements', ['id' => 'Cross-enroll'] ) }}" class="btn btn-sm btn-outline-primary d-none {{ ($_service == 4 ? 'active' : '') }}">Cross-enroll</a>
   </div>
 </div>
 <div class="row ">
@@ -122,12 +122,18 @@
           <table class="table align-items-center mb-0 table-hover ">
             <thead>
                 <tr>
-                  <th></th>
+                  <th>#</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    Name                    
+                      Photo
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Students No.
+                  </th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                    LRN
+                  </th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                    Name                    
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Course
@@ -151,8 +157,20 @@
                   @foreach($serviceData->requirements as $key => $requirement) 
                     <tr class="table-row">
                       <td>{{ $key += 1}}</td>
-                      <td class="ps-4">{{$requirement->user_student->name}}</td>
+                      <td>
+                          <div>
+                              <a data-fslightbox="student-list" href="{{(!empty($requirement->user_student->image) ? '/images/avatars/'.$requirement->user_student->image : '/images/user.jpg' )}}">
+                                  <img src="{{(!empty($requirement->user_student->image) ? '/images/avatars/'.$requirement->user_student->image : '/images/user.jpg' )}}" class="avatar avatar-sm me-3">
+                              </a>
+                          </div>
+                      </td>
                       <td class="ps-4">{{$requirement->user_student->student_number}}</td>
+                      <td class="ps-4">{{$requirement->user_student->lrn_number}}</td>
+                      <td class="ps-4">
+                        <a href="{{ route('edit.student', ['name'=> str_replace(' ', '_', $requirement->user_student->name), 'id'=> $requirement->user_student->id]) }}" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="View {{ $requirement->user_student->name}}">
+                          {{$requirement->user_student->name}}
+                        </a>
+                      </td>
                       <td class="ps-4">{{$requirement->course}}</td>
                       <td class="ps-4">{{$requirement->class_year}}</td>
                       <td class="ps-4">
@@ -170,11 +188,64 @@
                       </td>
                       <td class="ps-4">{{$requirement->academic_year}}</td>
                       <td class="text-center"> 
+                        <a data-bs-toggle="collapse" href="#collapseExample{{$requirement->id}}" role="button" aria-expanded="false" aria-controls="collapseExample" class="" >
+                            <i class="fas fa-file text-secondary" data-bs-toggle="tooltip" data-bs-original-title="View Requirements"></i>
+                        </a>
                         <a href="/{{$requirement->service->service_name}}/{{$requirement->id}}" class="mx-3" data-bs-toggle="tooltip" data-bs-original-title="Edit Requirement">
                             <i class="fas fa-edit text-secondary"></i>
                         </a>
                       </td>
                     </tr>
+                    <tr class="collapse" id="collapseExample{{$requirement->id}}">
+                      <td colspan="10">
+                          <div class="card card-body bg-gradient-dark px-0 pt-0 pb-2 my-3">
+                            <div class="table-responsive p-0">
+                              <table class="table mb-0 table-hover">
+                                  <thead>
+                                      <tr>
+                                          <th class="text-uppercase text-white text-xxs font-weight-bolder opacity-7">Documents</th>
+                                          <th class="text-uppercase text-white text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                                          <th class="text-uppercase text-white text-xxs font-weight-bolder opacity-7 ps-2">Image</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      @if(isset($requirement->requirement_documents) && count($requirement->requirement_documents)) 
+                                          @foreach($requirement->requirement_documents as $key => $document)
+                                          <tr class="border-b ">
+                                              <td>
+                                                  <div class="d-flex px-2">
+                                                      <h6 class="mb-0 text-sm text-light">{{ $document->document->document_name }}</h6>
+                                                  </div>
+                                              </td>
+                                              <td class="align-middle text-center">
+                                                  <div class="d-flex px-2">
+                                                      <h6 class="mb-0 text-sm text-light">{{ ($document->status == 1 ? 'Completed' : 'Deficient') }}</h6>
+                                                  </div>
+                                              </td>
+                                              <td class="align-middle text-center">
+                                                  <div class="d-flex align-items-center justify-content-start gap-2">
+                                                      @if(isset($document->image ) && !empty($document->image))
+                                                      <div >
+                                                        <a data-fslightbox="all-requirements" href="/images/{{ $document->service->service_name }}/{{$document->image}}">
+                                                            <img src="/images/{{ $document->service->service_name }}/{{$document->image}}" class="avatar avatar-sm me-3 ">
+                                                        </a>
+                                                      </div>
+                                                      @endif
+                                                  </div>
+                                              </td>
+                                          </tr>
+                                          @endforeach
+                                      @else 
+                                      <tr>
+                                          {{ 'No document selected' }}
+                                      <tr>
+                                      @endif
+                                    </tbody>
+                                </table>
+                              </div>  
+                          </div>
+                      </td>
+                  </tr>
                   @endforeach
                 @else
                 <tr>

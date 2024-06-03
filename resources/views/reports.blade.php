@@ -17,11 +17,12 @@
                           <div class="row">
                             <div class="col-md-4">
                               <select required class="form-control filter-service form-select @error('class_year') border-danger @enderror "  type="text" id="class_year" name="class_year">
-                                  @if(isset($services) && count($services) > 0)
+                                  <!-- @if(isset($services) && count($services) > 0)
                                     @foreach($services as $service)
                                       <option value="{{ $service->id }}" >{{ucfirst($service->service_name)}}</option>  
                                     @endforeach
-                                  @endif
+                                  @endif -->
+                                  <option value="1" >Admission</option>  
                               </select>
                             </div>
                             <div class="col-md-5">
@@ -35,7 +36,15 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                             <button id="service_export" class="btn btn-primary">Export</button>
+                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Generate
+                                </button>
+                                
+                                <div class="dropdown-menu">
+                                    <a  data-id="csv" class="dropdown-item service_export" href="#">Excel</a>
+                                    <a  data-id="admin-service-report"class="dropdown-item print" href="#">Print</a>
+                                </div>
+                            </div>
                             </div>
                           </div>
                         </div>
@@ -117,7 +126,7 @@
             });
       });
 
-      $('#service_export').click(function(){
+      $('.service_export').click(function(){
         var service_id = $('.filter-service').val();
         var academic_year = $('.filter-academic-year').val();
         $.get(`{{ route('service.export') }}`, {
@@ -145,6 +154,26 @@
             document.body.removeChild(link);
         });
       });
+
+      $(document).on('click', '.print', function(){
+            var id = $(this).data('id'); 
+            var service_id = $('.filter-service').val();
+            var academic_year = $('.filter-academic-year').val();
+            
+            setTimeout(function(){
+                // Construct the route URL with the dynamic parameters
+                var routeUrl = "/generate-report?id="+id+"&service_id="+service_id+"&academic_year="+academic_year;
+                var pr = window.open(routeUrl, "_blank");
+                pr.onload = function() {
+                    pr.print();
+                    pr.onafterprint = function () {
+                        pr.close();
+                        window.location.href = '/reports';
+                    }
+                }
+            }, 0);
+        });
+
         
     });
 </script>

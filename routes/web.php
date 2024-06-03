@@ -35,7 +35,7 @@ Route::middleware([CheckAuthAdmin::class])->group(function () {
 	Route::get('/student-management/{id}', [HomeController::class, 'showServiceManagement'])->name('show.requirements');
 
 	Route::get('student-list', [HomeController::class, 'StudentList'])->name('Student-List');
-	Route::get('student/{id}', [HomeController::class, 'editStudent'])->name('edit.student');
+	Route::get('student/{name}', [HomeController::class, 'editStudent'])->name('edit.student');
 
 	Route::get('admission', [HomeController::class, 'admission'])->name('admission');
 	Route::get('admission/{id}', [HomeController::class, 'editAdmission'])->name('edit.admission');
@@ -84,6 +84,8 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::prefix('html-function')->group(function(){
 		Route::get('{id}', [HomeController::class, 'htmlFunctions'])->name('html-functions');
 	});
+
+	Route::get('/generate-report', [ReportController::class, 'generateReport'])->name('print.admission.report');
 });
 
 Route::group(['middleware' => 'guest'], function () {

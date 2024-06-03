@@ -62,7 +62,7 @@
                         </td>
                       </tr>
                       <tr class="collapse" id="collapseExample{{$requirement->id}}">
-                          <td colspan="5">
+                          <td colspan="6">
                               <div class="card card-body bg-secondary px-0 pt-0 pb-2 my-3">
                                 <div class="table-responsive p-0">
                                   <table class="table mb-0 table-hover">
