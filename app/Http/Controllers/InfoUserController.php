@@ -98,7 +98,7 @@ class InfoUserController extends Controller
             }
         } 
 
-        return redirect()->route('Student-List');
+        return redirect()->route('show.requirements', ['id'=> 'Admission']);
     }
 
     public function destroy(Request $request){
