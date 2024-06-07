@@ -54,7 +54,7 @@
           <div class="card-body">
             <div class="row text-center ">
                 <div class="col-12">
-                    <h4 class="title text-uppercase {{ ($_deficiency == 1 ? 'text-white' : '') }}">Deficient ({{$serviceData->deficiencyPercentage}}%)</h4>
+                    <h4 class="title text-uppercase {{ ($_deficiency == 1 ? 'text-white' : '') }}">Number of students with deficient requirements</h4>
                 </div>
             </div>
             <div class="row text-center mb-4">
