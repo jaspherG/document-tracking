@@ -17,7 +17,7 @@
                  <div class="mb-3">
                   <p  id="error-message" class="text-danger mt-2"></p>
                   <div id="timer" style="display:none;">
-                      Too many attempts. Please try again in <span id="countdown"></span> seconds.
+                      Too many attempts. Please try again in <span id="countdown"></span>
                   </div>
                  </div>
 
