@@ -67,6 +67,13 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
   var options = {
+      title: {
+          text: 'Programs'
+        },
+        subtitle: {
+          text:
+          'The number of students in each program'
+        },
       series: [],
       chart: {
           width: 380,

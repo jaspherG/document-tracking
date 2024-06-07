@@ -13,20 +13,29 @@
                             <h5 class="mb-0">Report Data</h5>
                         </div>
                         
-                        <div class="col-md-4 gap-2 ">
+                        <div class="col-md-7 gap-2 ">
                           <div class="row">
-                            <div class="col-md-4">
-                              <select required class="form-control filter-service form-select @error('class_year') border-danger @enderror "  type="text" id="class_year" name="class_year">
-                                  <!-- @if(isset($services) && count($services) > 0)
+                            <div class="col-md-3">
+                              <select required class="form-control filter-program form-select "  type="text">
+                                 <option value="">Filter program</option>
+                                @if(isset($programs) && count($programs) > 0)
+                                    @foreach($programs as $program)
+                                        <option value="{{ $program->id }}">{{ $program->program_name }}</option>
+                                    @endforeach
+                                @endif
+                              </select>
+                            </div>
+                            <div class="col-md-3">
+                              <select required class="form-control filter-service form-select "  type="text">
+                                  @if(isset($services) && count($services) > 0)
                                     @foreach($services as $service)
                                       <option value="{{ $service->id }}" >{{ucfirst($service->service_name)}}</option>  
                                     @endforeach
-                                  @endif -->
-                                  <option value="1" >Admission</option>  
+                                  @endif
                               </select>
                             </div>
-                            <div class="col-md-5">
-                              <select required class="form-control filter-academic-year form-select @error('class_year') border-danger @enderror "  type="text" id="class_year" name="class_year">
+                            <div class="col-md-3">
+                              <select required class="form-control filter-academic-year form-select "  type="text">
                                     <option value="">Filter academic year </option>  
                                     @if(isset($academic_years) && count($academic_years) > 0)
                                       @foreach($academic_years as $academic_year)
@@ -105,26 +114,29 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     $(document).ready(function(){
-      $(document).on('input', '.filter-academic-year', function(){
-          var academic_year = $(this).val();
-          var service_id = $('.filter-service').val();
-            $.get("{{ route('html-functions', ['id' => 'get-filtered-report-data']) }}", {
-                service_id: service_id,
-                academic_year: academic_year,
-            }, function(html) {
-                $('#table_body').html(html);
-            });
+      $(document).on('change', '.filter-academic-year', function(){
+        filterTable();
       });
-      $(document).on('input', '.filter-service', function(){
-          var service_id = $(this).val();
-          var academic_year = $('.filter-academic-year').val();
-            $.get("{{ route('html-functions', ['id' => 'get-filtered-report-data']) }}", {
-                service_id: service_id,
-                academic_year: academic_year,
-            }, function(html) {
-                $('#table_body').html(html);
-            });
+      $(document).on('change', '.filter-service', function(){
+        filterTable();
       });
+
+      $(document).on('change', '.filter-program', function(){
+        filterTable();
+      });
+
+      const filterTable = () => {
+        var service_id = $('.filter-service').val();
+        var program_id = $('.filter-program').val();
+        var academic_year = $('.filter-academic-year').val();
+        $.get("{{ route('html-functions', ['id' => 'get-filtered-report-data']) }}", {
+            service_id: service_id,
+            program_id: program_id,
+            academic_year: academic_year,
+        }, function(html) {
+            $('#table_body').html(html);
+        });
+      }
 
       $('.service_export').click(function(){
         var service_id = $('.filter-service').val();

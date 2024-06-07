@@ -93,7 +93,9 @@ Route::group(['middleware' => 'guest'], function () {
 	Route::post('/register', [RegisterController::class, 'store']);
 	Route::get('/login', function () {
 		return view('session/login-session');
-	})->name('login');
+	})->name('login')->middleware('login.attempts');
+  Route::post('/login', [SessionsController::class, 'login'])->middleware('login.attempts');
+	Route::post('enabled_login', [SessionsController::class, 'enabledLogin']);
   Route::post('/login-session', [SessionsController::class, 'store']);
 	Route::get('/login/forgot-password', [ResetController::class, 'create']);
 	Route::post('/forgot-password', [ResetController::class, 'sendEmail']);

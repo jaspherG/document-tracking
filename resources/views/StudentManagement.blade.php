@@ -17,13 +17,13 @@
 
 </style>
 @section('content')
-<div class="row d-none ">
+<div class="row  ">
   <div class="col-12 mb-md-0  d-flex align-items-center justify-content-center gap-2 pt-2">
-      <a href="{{ route('show.requirements', ['id' => 'All'] ) }}" class="btn btn-sm btn-outline-primary d-none {{ ($_service == 0 ? 'active' : '') }}">All</a>
-      <a href="{{ route('show.requirements', ['id' => 'Admission'] ) }}" class="btn btn-sm btn-outline-primary d-none {{ ($_service == 1 ? 'active' : '') }}">Admission</a>
-      <a href="{{ route('show.requirements', ['id' => 'Returnee'] ) }}" class="btn btn-sm btn-outline-primary d-none {{ ($_service == 2 ? 'active' : '') }}">Returnee</a>
-      <a href="{{ route('show.requirements', ['id' => 'Transferee'] ) }}" class="btn btn-sm btn-outline-primary d-none {{ ($_service == 3 ? 'active' : '') }}">Transferee</a>
-      <a href="{{ route('show.requirements', ['id' => 'Cross-enroll'] ) }}" class="btn btn-sm btn-outline-primary d-none {{ ($_service == 4 ? 'active' : '') }}">Cross-enroll</a>
+      <a href="{{ route('show.requirements', ['id' => 'All'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 0 ? 'active' : '') }}">All</a>
+      <a href="{{ route('show.requirements', ['id' => 'Admission'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 1 ? 'active' : '') }}">Admission</a>
+      <a href="{{ route('show.requirements', ['id' => 'Returnee'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 2 ? 'active' : '') }}">Returnee</a>
+      <a href="{{ route('show.requirements', ['id' => 'Transferee'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 3 ? 'active' : '') }}">Transferee</a>
+      <a href="{{ route('show.requirements', ['id' => 'Cross-enroll'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 4 ? 'active' : '') }}">Cross-enroll</a>
   </div>
 </div>
 <div class="row ">
@@ -34,7 +34,7 @@
           <div class="card-body ">
             <div class="row text-center ">
                 <div class="col-12">
-                    <h4 class="title text-uppercase {{ ($_completed == 1 ? 'text-white' : '') }}">Completed ({{$serviceData->completedPercentage}}%)</h4>
+                    <h4 class="title text-uppercase {{ ($_completed == 1 ? 'text-white' : '') }}">Number of students with complete requirements</h4>
                 </div>
             </div>
             <div class="row text-center mb-4">
@@ -72,9 +72,9 @@
   <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
     <div class="card">
       <div class="card-header pb-0">
-        <div class="d-flex flex-row justify-content-between">
-              <div>
-                  <h5 class="mb-0">
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-0">
                     @if($_service == 0)
                     All
                     @elseif($_service == 1)
@@ -84,39 +84,62 @@
                     @elseif($_service == 3)
                     Transferee
                     @elseif($_service == 4)
-                    Coross-Enroll
+                    Cross-Enroll
                     @endif
-                  Requirements</h5>
-              </div>
-              <div class="d-flex gap-2">
-               <div class="row">
-                <div class="col-md-6">
-                  <select required class="form-control filter-academic-year form-select @error('class_year') border-danger @enderror "  type="text" id="class_year" name="class_year">
-                      <option value="">Filter academic year </option>  
-                      @if(isset($academic_years) && count($academic_years) > 0)
-                        @foreach($academic_years as $academic_year)
-                          <option value="{{ $academic_year }}" >{{$academic_year}}</option>  
-                        @endforeach
-                      @endif
-                  </select>
+                    Requirements
+                </h5>
+            </div>
+            <div class="d-flex gap-3 flex-wrap ">
+                <div class="col-md-2 ">
+                    <select class="form-control filter-program form-select">
+                        <option value="">Filter program</option>
+                        @if(isset($programs) && count($programs) > 0)
+                            @foreach($programs as $program)
+                                <option value="{{ $program->id }}">{{ $program->program_name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
-                <div class="col-md-6">
-                  <div class=" d-flex align-items-center">
-                      <div class="input-group">
-                          <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                          <input type="text" class="form-control filter-input" placeholder="Type here...">
-                      </div>
-                  </div>
+                <div class="col-md-2">
+                    <select class="form-control filter-document form-select">
+                        <option value="">Filter document</option>
+                        @if(isset($documents) && count($documents) > 0)
+                            @foreach($documents as $document)
+                                <option value="{{ $document->id }}">{{ $document->document_name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
-               </div>
-               
-                <!-- filtered category -->
-                <input type="hidden" class="service_category" value="{{$_service}}">
-                <input type="hidden" class="completed_category" value="{{$_completed}}">
-                <input type="hidden" class="deficient_category" value="{{$_deficiency}}">
-              </div>
-          </div>
-      </div>
+                <div class="col-md-2">
+                    <select class="form-control filter-document-status form-select">
+                        <option value="">Filter document status</option>
+                        <option value="1">Completed</option>
+                        <option value="0">Deficient</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select class="form-control filter-academic-year form-select">
+                        <option value="">Filter academic year</option>
+                        @if(isset($academic_years) && count($academic_years) > 0)
+                            @foreach($academic_years as $academic_year)
+                                <option value="{{ $academic_year }}">{{ $academic_year }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
+                        <input type="text" class="form-control filter-input" placeholder="Type here...">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" class="service_category" value="{{ $_service }}">
+        <input type="hidden" class="completed_category" value="{{ $_completed }}">
+        <input type="hidden" class="deficient_category" value="{{ $_deficiency }}">
+    </div>
+
       <div class="card-body px-0 pt-0 pb-2">
         <div class="p-0">
           <table class="table align-items-center mb-0 table-hover ">
@@ -280,38 +303,47 @@
       });
 
       $(document).on('input', '.filter-input', function(){
-            var text = $(this).val();
-            var academic_year = $('.filter-academic-year').val();
-            var service = $('.service_category').val();
-            var completed = $('.completed_category').val();
-            var deficient = $('.deficient_category').val();
-            $.get("{{ route('html-functions', ['id' => 'get-filtered-student-management-list']) }}", {
-                filter_academic_year: academic_year,
-                filter_service: service,
-                filter_completed: completed,
-                filter_deficient: deficient,
-                filter_text: text,
-            }, function(html) {
-                $('#table_body').html(html);
-            });
-        });
+        filterTable();
+      });
 
-        $(document).on('input', '.filter-academic-year', function(){
-            var academic_year = $(this).val();
-            var text = $('.filter-input').val();
-            var service = $('.service_category').val();
-            var completed = $('.completed_category').val();
-            var deficient = $('.deficient_category').val();
-            $.get("{{ route('html-functions', ['id' => 'get-filtered-student-management-list']) }}", {
-                filter_academic_year: academic_year,
-                filter_service: service,
-                filter_completed: completed,
-                filter_deficient: deficient,
-                filter_text: text,
-            }, function(html) {
-                $('#table_body').html(html);
-            });
+      $(document).on('change', '.filter-academic-year', function(){
+        filterTable();
+      });
+
+      $(document).on('change', '.filter-document', function(){
+        filterTable();
+      });
+
+      $(document).on('change', '.filter-document-status', function(){
+        filterTable();
+      });
+
+      $(document).on('change', '.filter-program', function(){
+        filterTable();
+      });
+
+      const filterTable = () => {
+        var program_id = $('.filter-program').val();
+        var document_id = $('.filter-document').val();
+        var document_status = $('.filter-document-status').val();
+        var academic_year = $('.filter-academic-year').val();
+        var text = $('.filter-input').val();
+        var service = $('.service_category').val();
+        var completed = $('.completed_category').val();
+        var deficient = $('.deficient_category').val();
+        $.get("{{ route('html-functions', ['id' => 'get-filtered-student-management-list']) }}", {
+            filter_program: program_id,
+            filter_document: document_id,
+            filter_document_status: document_status,
+            filter_academic_year: academic_year,
+            filter_service: service,
+            filter_completed: completed,
+            filter_deficient: deficient,
+            filter_text: text,
+        }, function(html) {
+            $('#table_body').html(html);
         });
+      }
 
      
     });

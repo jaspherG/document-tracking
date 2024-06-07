@@ -8,9 +8,54 @@
 </div>
 <div class="row mx-2 my-4">
   <div class="col-lg-8 col-md-12 mb-md-0 mb-4">
-    <div class="card">
+  <!-- <div class="card">
         <div id="chart"></div>
-    </div>  
+    </div>   -->
+    <div class="row">
+    
+    @if(isset($dashboardData->requirementsPerService))
+        @foreach($dashboardData->requirementsPerService as $requirement)
+            <div class="col-lg-3 mb-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <h4>{{ ucfirst($requirement->service->service_name) }}</h4>
+                                <span>Total: {{ $requirement->total }}</span><br>
+                                <span>Deficient: {{ $requirement->deficient_count }}</span><br>
+                                <span>Completed: {{ $requirement->completed_count }}</span><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    @endif
+    </div>
+    <div class="row">
+        @if(isset($dashboardData->program_student_counts))
+            @foreach($dashboardData->program_student_counts as $program)
+            <div class="col-lg-3 mb-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">{{$program->program_name}} Students</p>
+                                <h4 class="mb-0">
+                                    <div>{{$program->students_count }}</div>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @endforeach
+        @endif
+    </div>
+
+
+    
   </div>
   <div class="col-lg-4 col-md-12 mb-md-0 mb-4">
    
