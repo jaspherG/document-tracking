@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->integer('attempts')->default(0);
             $table->timestamp('lockout_time')->nullable();
+            $table->boolean('disabled_login')->default(0)->comment('0 == not disabled || disabled');
             $table->timestamps();
         });
     }
