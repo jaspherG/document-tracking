@@ -10,7 +10,7 @@
             <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
               <div class="card card-plain mt-8">
                 <div class="card-header pb-0 text-left bg-transparent">
-                  <h3 class="font-weight-bolder text-danger text-gradient">AROTrack: Documents Tracking and Monitoring System</h3>
+                  <h3 class="font-weight-bolder text-dark text-gradient">AROTrack: Documents Tracking and Monitoring System</h3>
                 </div>
 
                 <div class="card-body">
@@ -23,7 +23,7 @@
 
                   <form id="loginForm">
                     @csrf
-                    <label>Email</label>
+                    <label>Username</label>
                     <div class="mb-3">
                       <input required type="email" class="form-control" name="email" id="email" placeholder="Email" value="" aria-label="Email" aria-describedby="email-addon">
                     </div>
@@ -36,7 +36,7 @@
                       <span id="togglePasswordIcon" class="toggle-password" onclick="togglePassword()">Show Password</span>
                     </div>
                     <div class="text-center">
-                      <button type="submit"  id="submit" class="btn bg-gradient-danger w-100 mt-4 mb-0">Sign in</button>
+                      <button type="submit"  id="submit" class="btn bg-danger  w-100 mt-4 mb-0 text-white">Sign in</button>
                     </div>
                   </form>
                 

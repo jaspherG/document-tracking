@@ -23,7 +23,6 @@
       <a href="{{ route('show.requirements', ['id' => 'Admission'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 1 ? 'active' : '') }}">Admission</a>
       <a href="{{ route('show.requirements', ['id' => 'Returnee'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 2 ? 'active' : '') }}">Returnee</a>
       <a href="{{ route('show.requirements', ['id' => 'Transferee'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 3 ? 'active' : '') }}">Transferee</a>
-      <a href="{{ route('show.requirements', ['id' => 'Cross-enroll'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 4 ? 'active' : '') }}">Cross-enroll</a>
   </div>
 </div>
 <div class="row ">
@@ -76,17 +75,15 @@
             <div>
                 <h5 class="mb-0">
                     @if($_service == 0)
-                    All
+                    Student
                     @elseif($_service == 1)
                     Admission
                     @elseif($_service == 2)
                     Returnee
                     @elseif($_service == 3)
                     Transferee
-                    @elseif($_service == 4)
-                    Cross-Enroll
                     @endif
-                    Requirements
+                    List
                 </h5>
             </div>
             <div class="d-flex gap-3 flex-wrap ">
@@ -110,16 +107,16 @@
                         @endif
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <select class="form-control filter-document-status form-select">
-                        <option value="">Filter document status</option>
+                    <option value="">Filter document status</option></marquee>
                         <option value="1">Completed</option>
                         <option value="0">Deficient</option>
                     </select>
                 </div>
                 <div class="col-md-2">
                     <select class="form-control filter-academic-year form-select">
-                        <option value="">Filter academic year</option>
+                        <option value="">Filter A.Y.</option>
                         @if(isset($academic_years) && count($academic_years) > 0)
                             @foreach($academic_years as $academic_year)
                                 <option value="{{ $academic_year }}">{{ $academic_year }}</option>
@@ -127,7 +124,7 @@
                         @endif
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <div class="input-group">
                         <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
                         <input type="text" class="form-control filter-input" placeholder="Type here...">
@@ -152,14 +149,13 @@
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Students No.
                   </th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    LRN
-                  </th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                  <th>
+</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" >
                     Name                    
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    Course
+                    Program
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Class Year

@@ -11,6 +11,7 @@ use App\Models\Document;
 use App\Models\Requirement;
 use App\Models\RequirementDocument;
 use App\Models\RequirementRemark;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
@@ -25,6 +26,8 @@ class ReportController extends Controller
     }
 
     public function generateReport(Request $request) {
+        $user = Auth::user();
+
         $data = new \stdClass();
         $data->title = '';
         $data->tableData = [];
@@ -45,7 +48,7 @@ class ReportController extends Controller
         $title =  $data->title;
         $tableData =  $data->tableData;
         $description =  "Academic Year: ".$data->year;
-        return view('print.report', compact('tableData', 'title', 'description'))->with('_page', 'print report');
+        return view('print.report', compact('tableData', 'title', 'description', 'user'))->with('_page', 'print report');
     }
     
 

@@ -26,7 +26,7 @@
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                 <i style="font-size: 1rem;" class="fas fa-address-book ps-2 pe-2 text-center text-dark {{ ($_page == 'Student Management' ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
             </div>
-            <span class="nav-link-text ms-1">Student Management</span>
+            <span class="nav-link-text ms-1">Student Record</span>
         </a>
       </li>
       <li class="nav-item pb-2 d-none">
@@ -45,7 +45,7 @@
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Admission' ? 'text-white' : 'text-dark') }} " aria-="true"></i>
           </div>
-          <span class="nav-link-text ms-1">Admission</span>
+          <span class="nav-link-text ms-1">Admission Requirement</span>
         </a>
       </li>
       <li class="nav-item ">
@@ -53,7 +53,7 @@
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Returnee' ? 'text-white' : 'text-dark') }} " aria-="true"></i>
           </div>
-          <span class="nav-link-text ms-1">Returnee</span>
+          <span class="nav-link-text ms-1">Returnee Requirement</span>
         </a>  
       </li>
       <li class="nav-item ">
@@ -61,7 +61,7 @@
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Transferee' ? 'text-white' : 'text-dark') }} " aria-="true"></i>
           </div>
-          <span class="nav-link-text ms-1">Transferee</span>
+          <span class="nav-link-text ms-1">Transferee Requirement</span>
         </a>
       </li>
       <li class="nav-item d-none">
@@ -80,7 +80,7 @@
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <i style="font-size: 1rem;" class="fas fa-table ps-2 pe-2 text-center text-dark {{ ($_page == 'reports' ? 'text-white' : 'text-dark') }} " aria-hidden="true"></i>
           </div>
-          <span class="nav-link-text ms-1">Report list</span>
+          <span class="nav-link-text ms-1">Generate Report</span>
         </a>
       </li>
    

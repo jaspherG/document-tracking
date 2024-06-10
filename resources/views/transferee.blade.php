@@ -40,6 +40,15 @@
                             </div>
                         @endif
                         <div class="row">
+                        <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="student_number" class="form-control-label">{{ __('Student No.') }} <b class="text-danger">*</b></label>
+                                    <input  class="form-control @error('student_number') border-danger @enderror" type="text" placeholder="Student ID Number" id="student_number" name="student_number" value="{{ old('student_number') ?? $formData->user_student->student_number }}" >
+                                    @error('student_number')
+                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="user-name" class="form-control-label">{{ __('Full Name') }} <b class="text-danger">*</b></label>
@@ -58,31 +67,9 @@
                                         @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="phone_number" class="form-control-label">{{ __('Phone Number') }} <b class="text-danger">*</b></label>
-                                        <input required class="form-control @error('phone_number') border-danger @enderror" type="tel" placeholder="12345" id="phone_number" name="phone_number" value="{{ old('phone_number') ?? $formData->user_student->phone_number }}" >
-                                        @error('phone_number')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="address" class="form-control-label">{{ __('Address') }} <b class="text-danger">*</b></label>
-                                    <input required class="form-control @error('address') border-danger @enderror" type="text" placeholder="Address" id="address" name="address" value="{{ old('address') ?? $formData->user_student->address }}" >
-                                    @error('address')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
                         <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="course" class="form-control-label">{{ __('Course') }} <b class="text-danger">*</b></label>
+                                    <label for="course" class="form-control-label">{{ __('Program') }} <b class="text-danger">*</b></label>
                                     @php
                                         $c_year = old('course') ?? $formData->program_id;
                                     @endphp
@@ -101,7 +88,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="class_year" class="form-control-label">{{ __('Class Year') }} <b class="text-danger">*</b></label>
+                                    <label for="class_year" class="form-control-label">{{ __('Year Level') }} <b class="text-danger">*</b></label>
                                     @php
                                         $c_year = old('class_year') ?? $formData->class_year;
                                     @endphp
@@ -113,24 +100,6 @@
                                         <option value="Fourth Year" {{ $c_year == 'Fourth Year' ? 'selected' : '' }}>Fourth Year</option>  
                                     </select>
                                     @error('class_year')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="student_number" class="form-control-label">{{ __('Student No.') }}</label>
-                                    <input  class="form-control @error('student_number') border-danger @enderror" type="text" placeholder="Student ID Number" id="student_number" name="student_number" value="{{ old('student_number') ?? $formData->user_student->student_number }}" >
-                                    @error('student_number')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="lrn_number" class="form-control-label">{{ __('LRN') }} <b class="text-danger">*</b></label>
-                                    <input required class="form-control @error('lrn_number') border-danger @enderror" type="text" placeholder="LRN" id="lrn_number" name="lrn_number" value="{{ old('lrn_number') ?? $formData->user_student->lrn_number }}" >
-                                    @error('lrn_number')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
                                 </div>

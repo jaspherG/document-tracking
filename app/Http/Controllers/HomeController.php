@@ -502,13 +502,13 @@ class HomeController extends Controller
             'service_id' => 'required|numeric',
             'name' => 'required|string',
             'email' => 'required|email|string',
-            'phone_number' => 'required|string|max:11',
-            'address' => 'required|string',
+            'phone_number' => 'nullable|string|max:11',
+            'address' => 'nullable|string',
             'course' => 'required|exists:programs,id',
             'class_year' => 'required|string',
             'academic_year_1' => 'required|numeric',
             'academic_year_2' => 'required|numeric',
-            'lrn_number' => 'required|string',
+            'lrn_number' => 'nullable|string',
             'student_number' => 'required|string',
             'remarks_name' => 'required|string',
             'remarks_email' => 'required|email|string',
@@ -523,7 +523,7 @@ class HomeController extends Controller
         $requirement_status =  $total_documents == count($documentIds) ? 'Completed' : 'Deficiency';
     
         // Check if the user with the same LRN or email already exists
-        $student = User::where('lrn_number', $validated['lrn_number'])
+        $student = User::where('student_number', $validated['student_number'])
                     ->orWhere('email', $validated['email'])
                     ->first();
 
@@ -648,13 +648,13 @@ class HomeController extends Controller
             'service_id' => 'required|numeric',
             'name' => 'required|string',
             'email' => 'required|email|string',
-            'phone_number' => 'required|string|max:11',
-            'address' => 'required|string',
+            'phone_number' => 'nullable|string|max:11',
+            'address' => 'nullable|string',
             'course' => 'required|exists:programs,id',
             'class_year' => 'required|string',
             'academic_year_1' => 'required|numeric',
             'academic_year_2' => 'required|numeric',
-            'lrn_number' => 'required|string',
+            'lrn_number' => 'nullable|string',
             'student_number' => 'required|string',
             'remarks_name' => 'required|string',
             'remarks_email' => 'required|email|string',

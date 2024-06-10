@@ -33,10 +33,6 @@ class DocumentSeeder extends Seeder
             ['document_name' => 'Honorable Dismissal'],
             ['document_name' => 'Waiver for Transferee'],
             ['document_name' => 'X-ray Medical Certificate'],
-            ['document_name' => 'Form Shiftee'],
-            ['document_name' => 'Curriculum Sheet'],
-            ['document_name' => 'Request student'],
-            ['document_name' => 'Cross Enroll Form'],
         ];
 
         DB::table('documents')->insert($documents);

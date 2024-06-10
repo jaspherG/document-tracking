@@ -92,6 +92,12 @@
                 background-color: #f2f2f2;
             }
 
+            .footer-info {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
         }
     </style>
 </head>
@@ -126,7 +132,10 @@
     </main>
 
     <footer>
-        <p></p>
+        <div id="footer-info">
+        <div>{{$user->name}}</div>
+        <div></div>
+        </div>
     </footer>
 
     <script>
