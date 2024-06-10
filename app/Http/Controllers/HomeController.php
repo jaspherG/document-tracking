@@ -65,7 +65,8 @@ class HomeController extends Controller
         $user = Auth::user();
         if($user->type == 'Admission'){
             $dashboardData = $this->dashboardData();
-            return view('dashboard', compact(['user', 'dashboardData']))->with('_page', 'dashboard');
+            $serviceData = $this->getServiceStudentRequirements();
+            return view('dashboard', compact(['user', 'dashboardData', 'serviceData']))->with('_page', 'dashboard');
         } else if($user->type == 'Registrar'){ 
             $programs = Program::all();
             $dashboardData = $this->registrarDashboardData();
@@ -100,10 +101,12 @@ class HomeController extends Controller
         
         $requirements = Requirement::where('deleted_flag', 0)->count();
         $documents = RequirementDocument::where('status', 1)->count();
+        $students = User::where('type', 'Student')->where('status', 'Active')->where('deleted_flag', 0)->count();
 
         $data = new \stdClass();
         $data->requirements = $requirements;
         $data->documents = $documents;
+        $data->student_count = $students;
         $data->pie_data = $pie_data;
         $data->pie_categories = $pie_categories;
 
@@ -184,40 +187,37 @@ class HomeController extends Controller
         return view('profile', compact(['user']))->with('_page', 'profile');
     }
 
+    // public function StudentManagement(){
+    //     $user = Auth::user();
+    //     $academic_years = Requirement::distinct()->pluck('academic_year');
+    //     $documents = Document::all();
+    //     $programs = Program::all();
+    //     $serviceData = $this->getServiceStudentRequirements();
+    //     return view('StudentManagement', compact(['user', 'serviceData', 'academic_years', 'documents', 'programs']))->with('_page', 'Student Management')->with('_service', 0)->with('_completed', 1)->with('_deficiency', 1)->with('service', 'All');
+    // }
+
     public function StudentManagement(){
         $user = Auth::user();
         $academic_years = Requirement::distinct()->pluck('academic_year');
         $documents = Document::all();
         $programs = Program::all();
+        $services = Service::all();
         $serviceData = $this->getServiceStudentRequirements();
-        return view('StudentManagement', compact(['user', 'serviceData', 'academic_years', 'documents', 'programs']))->with('_page', 'Student Management')->with('_service', 0)->with('_completed', 1)->with('_deficiency', 1)->with('service', 'All');
+        return view('StudentManagement', compact(['user', 'serviceData', 'academic_years', 'documents', 'programs', 'services']))->with('_page', 'Student Management')->with('_program', 0)->with('_completed', 1)->with('_deficiency', 1)->with('service', 'All');
     }
 
     public function showServiceManagement(Request $request, string $id){
         $service = $id;
         if($id == 'All') {
            $id = 0; 
-        } else if($id == 'Admission') {
-            $id = 1; 
-        } else if($id == 'Returnee') {
-            $id = 2; 
-        } else if($id == 'Transferee') {
-            $id = 3; 
-        } else if($id == 'Cross-enroll') {
-            $id = 4; 
+        } else {
+            $s_program = Program::where('program_name', $id)->first();
+            $id = $s_program->id;
         }
 
-        $documents = [];
-        if($id !== 0){
-            $service = Service::findOrFail($id); // 1 = admission
-            if ($service) {
-                $documentIds = json_decode($service->document_ids);
-                $documents = Document::whereIn('id', $documentIds)->get();
-            } 
-        } else {
-            $documents = Document::all();
-        }
+        $documents = Document::all();
         $programs = Program::all();
+        $services = Service::all();
         
         $completed = 1;
         $deficiency = 1;
@@ -230,7 +230,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $academic_years = Requirement::distinct()->pluck('academic_year');
         $serviceData = $this->getServiceStudentRequirements($id, $status);
-        return view('StudentManagement', compact(['user', 'serviceData', 'academic_years', 'documents', 'programs']))->with('_page', 'Student Management')->with('_service', $id)->with('_completed', $completed)->with('_deficiency', $deficiency)->with('service', $service);
+        return view('StudentManagement', compact(['user', 'serviceData', 'academic_years', 'documents', 'programs', 'services']))->with('_page', 'Student Management')->with('_program', $id)->with('_completed', $completed)->with('_deficiency', $deficiency)->with('service', $service);
     }
 
     private function getServiceStudentRequirements($serviceId='', $status='', $filter_text='', $academic_year='', $document='', $document_status='', $program='') {
@@ -246,8 +246,8 @@ class HomeController extends Controller
             $q->where('deleted_flag', 0);
         });
         if(!empty($serviceId)  ) {
-            $requirement->where('service_id', $serviceId);
-            $allRequirement->where('service_id', $serviceId);
+            $requirement->where('program_id', $serviceId);
+            $allRequirement->where('program_id', $serviceId);
         }
         if(!empty($status)) {
             $requirement->where('status', $status);
@@ -265,8 +265,9 @@ class HomeController extends Controller
             $requirement->where('academic_year', $academic_year);
         }
         if(!empty($program)) {
-            $requirement->where('program_id', $program);
+            $requirement->where('service_id', $program);
         }
+        
         if (!empty($document) && !empty($document_status)) {
             $requirement->whereHas('requirement_documents', function($query) use ($document, $document_status) {
                 $query->where('document_id', $document);

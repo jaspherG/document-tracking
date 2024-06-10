@@ -6,11 +6,62 @@
         <strong>Hi {{$user->name}}</strong> Welcome
     </span>
 </div>
-<div class="row mx-2 my-4">
-  <div class="col-lg-8 col-md-12 mb-md-0 mb-4">
+<div class="row  mx-2 my-4">
+
+    <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
+        <div class="row">
+            <div class="col-lg-4 mb-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">Number of students with complete requirements</p>
+                                <h4 class="mb-0">
+                                    <div>{{$serviceData->completedCount}}</div>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">Number of students with deficient requirements</p>
+                                <h4 class="mb-0">
+                                    <div>{{$serviceData->deficiencyCount}}</div>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">Total Number of Students</p>
+                                <h4 class="mb-0">
+                                    <div>{{$dashboardData->student_count }}</div>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mx-2 mb-4">
+    
+  <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
   <!-- <div class="card">
         <div id="chart"></div>
     </div>   -->
+    
     <div class="row">
     
     @if(isset($dashboardData->requirementsPerService))
@@ -53,11 +104,12 @@
             @endforeach
         @endif
     </div>
+    
 
 
     
   </div>
-  <div class="col-lg-4 col-md-12 mb-md-0 mb-4">
+  
    
 
 

@@ -51,6 +51,20 @@
               </div>
             </div>
           </div>
+          <div class="col-lg-4 mb-3 d-none">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">Total Number of Students</p>
+                                <h4 class="mb-0">
+                                    <div>{{$dashboardData->student_count }}</div>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
       </div>
       <div class="col-lg-4 col-md-12 mb-md-0 mb-4">

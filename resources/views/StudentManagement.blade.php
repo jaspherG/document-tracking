@@ -17,56 +17,17 @@
 
 </style>
 @section('content')
-<div class="row  ">
+<div class="row  mb-5">
   <div class="col-12 mb-md-0  d-flex align-items-center justify-content-center gap-2 pt-2">
-      <a href="{{ route('show.requirements', ['id' => 'All'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 0 ? 'active' : '') }}">All</a>
-      <a href="{{ route('show.requirements', ['id' => 'Admission'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 1 ? 'active' : '') }}">Admission</a>
-      <a href="{{ route('show.requirements', ['id' => 'Returnee'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 2 ? 'active' : '') }}">Returnee</a>
-      <a href="{{ route('show.requirements', ['id' => 'Transferee'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_service == 3 ? 'active' : '') }}">Transferee</a>
+      <a href="{{ route('show.requirements', ['id' => 'All'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_program == 0 ? 'active' : '') }}">All</a>
+      @if(isset($programs) && count($programs) > 0)
+        @foreach($programs as $program)
+          <a href="{{ route('show.requirements', ['id' => $program->program_name ] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_program == $program->id ? 'active' : '') }}">{{ ucfirst($program->program_name) }}</a>
+        @endforeach
+      @endif
   </div>
 </div>
-<div class="row ">
-  <div class="col-lg-6 col-12 mb-md-0 mb-4 d-flex align-items-center justify-content-center p-5">
-    <div class="col-lg-6">
-      <div id="card_completed" class="card cursor-pointer add-shadow {{ ($_completed == 1 ? 'bg-gradient-primary' : 'border border-2 border-primary') }}">
-        <a href="{{ route('show.requirements', ['id' => $service, 'status' => 'completed'] ) }}" class="text-decoration-none">
-          <div class="card-body ">
-            <div class="row text-center ">
-                <div class="col-12">
-                    <h4 class="title text-uppercase {{ ($_completed == 1 ? 'text-white' : '') }}">Number of students with complete requirements</h4>
-                </div>
-            </div>
-            <div class="row text-center mb-4">
-                <div class="col-12">
-                    <span class="fw-bold fs-4 {{ ($_completed == 1 ? 'text-light' : '') }}">{{$serviceData->completedCount}}</span>
-                </div>
-            </div>
-          </div>
-        </a>  
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-6 col-12 mb-md-0 mb-4 d-flex align-items-center justify-content-center p-5">
-    <div class="col-lg-6 ">
-      <div id="card_deficiency" class="card cursor-pointer add-shadow {{ ($_deficiency == 1 ? 'bg-gradient-primary text-light' : 'border border-2 border-primary') }} ">
-        <a href="{{ route('show.requirements', ['id' => $service, 'status' => 'deficiency'] ) }}" class="text-decoration-none">
-          <div class="card-body">
-            <div class="row text-center ">
-                <div class="col-12">
-                    <h4 class="title text-uppercase {{ ($_deficiency == 1 ? 'text-white' : '') }}">Number of students with deficient requirements</h4>
-                </div>
-            </div>
-            <div class="row text-center mb-4">
-                <div class="col-12">
-                    <span class="fw-bold fs-4 {{ ($_deficiency == 1 ? 'text-light' : '') }}">{{$serviceData->deficiencyCount}}</span>
-                </div>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
+
 <div class="row my-2">
   <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
     <div class="card">
@@ -74,25 +35,27 @@
         <div class="d-flex flex-row justify-content-between align-items-center">
             <div>
                 <h5 class="mb-0">
-                    @if($_service == 0)
                     Student
-                    @elseif($_service == 1)
-                    Admission
-                    @elseif($_service == 2)
-                    Returnee
-                    @elseif($_service == 3)
-                    Transferee
-                    @endif
                     List
                 </h5>
             </div>
             <div class="d-flex gap-3 flex-wrap ">
-                <div class="col-md-2 ">
+                <!-- <div class="col-md-2 ">
                     <select class="form-control filter-program form-select">
                         <option value="">Filter program</option>
                         @if(isset($programs) && count($programs) > 0)
                             @foreach($programs as $program)
                                 <option value="{{ $program->id }}">{{ $program->program_name }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div> -->
+                <div class="col-md-2 d-none">
+                    <select class="form-control filter-requirement form-select">
+                        <option value="">Filter Requirement</option>
+                        @if(isset($services) && count($services) > 0)
+                            @foreach($services as $service)
+                                <option value="{{ $service->id }}">{{ ucfirst($service->service_name) }}</option>
                             @endforeach
                         @endif
                     </select>
@@ -132,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <input type="hidden" class="service_category" value="{{ $_service }}">
+        <input type="hidden" class="service_category" value="{{ $_program }}">
         <input type="hidden" class="completed_category" value="{{ $_completed }}">
         <input type="hidden" class="deficient_category" value="{{ $_deficiency }}">
     </div>
@@ -149,8 +112,7 @@
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Students No.
                   </th>
-                  <th>
-</th>
+                
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" >
                     Name                    
                   </th>
@@ -158,13 +120,16 @@
                     Program
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    Class Year
+                    Year Level
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Completion
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Academic Year
+                  </th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                    Requirement
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Action
@@ -184,7 +149,6 @@
                           </div>
                       </td>
                       <td class="ps-4">{{$requirement->user_student->student_number}}</td>
-                      <td class="ps-4">{{$requirement->user_student->lrn_number}}</td>
                       <td class="ps-4">
                         <a href="{{ route('edit.student', ['name'=> str_replace(' ', '_', $requirement->user_student->name), 'id'=> $requirement->user_student->id]) }}" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="View {{ $requirement->user_student->name}}">
                           {{$requirement->user_student->name}}
@@ -206,6 +170,8 @@
                         </div>
                       </td>
                       <td class="ps-4">{{$requirement->academic_year}}</td>
+                      <td class="ps-4">{{ ucfirst($requirement->service->service_name)}}</td>
+
                       <td class="text-center"> 
                         <a data-bs-toggle="collapse" href="#collapseExample{{$requirement->id}}" role="button" aria-expanded="false" aria-controls="collapseExample" class="" >
                             <i class="fas fa-file text-secondary" data-bs-toggle="tooltip" data-bs-original-title="View Requirements"></i>
@@ -317,9 +283,15 @@
       $(document).on('change', '.filter-program', function(){
         filterTable();
       });
+      
+      $(document).on('change', '.filter-requirement', function(){
+        filterTable();
+      });
+      
 
       const filterTable = () => {
-        var program_id = $('.filter-program').val();
+        var requirement_id = $('.filter-requirement').val();
+        // var program_id = $('.filter-program').val();
         var document_id = $('.filter-document').val();
         var document_status = $('.filter-document-status').val();
         var academic_year = $('.filter-academic-year').val();
@@ -328,7 +300,7 @@
         var completed = $('.completed_category').val();
         var deficient = $('.deficient_category').val();
         $.get("{{ route('html-functions', ['id' => 'get-filtered-student-management-list']) }}", {
-            filter_program: program_id,
+            filter_program: requirement_id,
             filter_document: document_id,
             filter_document_status: document_status,
             filter_academic_year: academic_year,

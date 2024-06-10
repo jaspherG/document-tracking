@@ -11,7 +11,6 @@
           </div>
       </td>
       <td class="ps-4">{{$requirement->user_student->student_number}}</td>
-      <td class="ps-4">{{$requirement->user_student->lrn_number}}</td>
       <td class="ps-4">
         <a href="{{ route('edit.student', ['name'=> str_replace(' ', '_', $requirement->user_student->name), 'id'=> $requirement->user_student->id]) }}" class="mx-1" data-bs-toggle="tooltip" data-bs-original-title="View {{ $requirement->user_student->name}}">
           {{$requirement->user_student->name}}
@@ -33,6 +32,7 @@
         </div>
       </td>
       <td class="ps-4">{{$requirement->academic_year}}</td>
+      <td class="ps-4">{{ ucfirst($requirement->service->service_name)}}</td>
       <td class="text-center"> 
         <a data-bs-toggle="collapse" href="#collapseExample{{$requirement->id}}" role="button" aria-expanded="false" aria-controls="collapseExample" class="" >
             <i class="fas fa-file text-secondary" data-bs-toggle="tooltip" data-bs-original-title="View Requirements"></i>
