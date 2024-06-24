@@ -75,7 +75,7 @@ Route::middleware([CheckAuthAdmin::class])->group(function () {
 Route::group(['middleware' => 'auth'], function () {
 
   Route::get('/', [HomeController::class, 'home']);
-	Route::get('dashboard', [HomeController::class, 'viewDashboard'])->name('dashboard');
+	Route::get('dashboard', [HomeController::class, 'viewDashboard'])->name('dashboard');	
 
 	Route::get('reports', [HomeController::class, 'report'])->name('reports');
 
