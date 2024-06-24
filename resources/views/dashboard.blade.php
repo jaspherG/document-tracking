@@ -1,52 +1,60 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-<div class="alert alert-secondary mx-4 mb-2" role="alert">
+<div class="alert alert-danger mx-5 mb-2" role="alert">
     <span class="text-white">
         <strong>Hi {{$user->name}}</strong> Welcome
     </span>
 </div>
-<div class="row  mx-2 my-4">
-
-    <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
+<div class="row mx-2 mb-4">
+    <div class="col-lg-12 col-md-12 mb-md-0 mb-1">
         <div class="row">
             <div class="col-lg-4 mb-3">
-                <div class="card border-0 shadow-sm">
+                <div id="card_completed" class="card cursor-pointer add-shadow bg-gradient-warning border border-2 border-primary')">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">Number of students with complete requirements</p>
+                                <a href="{{ url('completed') }} {{ ($_page == 'completed' ? 'active' : '') }}">                   
+                                <h4 class="title text-white text-uppercase fw-medium" style="font-style: ; font-family: Cascadia Code, sans-serif;">NUMBER OF STUDENT WITH COMPLETED REQUIREMENTS</h4>
                                 <h4 class="mb-0">
+                                <hr class="horizontal dark mt-2">
                                     <div>{{$serviceData->completedCount}}</div>
                                 </h4>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 mb-3">
-                <div class="card border-0 shadow-sm">
+                <div id="card_completed" class="card cursor-pointer add-shadow bg-gradient-warning border border-2 border-primary')">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">Number of students with deficient requirements</p>
+                            <a href="{{ url('deficiency') }} {{ ($_page == 'deficiency' ? 'active' : '') }}"> 
+                                <h4 class="title text-white text-uppercase fw-medium" style="font-style: ; font-family: Cascadia Code, sans-serif;">NUMBER OF STUDENT WITH DEFICIENCY REQUIREMENTS</h4>
                                 <h4 class="mb-0">
+                                <hr class="horizontal dark mt-2">
                                     <div>{{$serviceData->deficiencyCount}}</div>
                                 </h4>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 mb-3">
-                <div class="card border-0 shadow-sm">
+                <div id="card_completed" class="card cursor-pointer add-shadow bg-gradient-warning border border-2 border-primary')">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">Total Number of Students</p>
+                            <a href="{{ url('overallstudent') }} {{ ($_page == 'overallstudent' ? 'active' : '') }}"> 
+                                <h4 class="title text-white text-uppercase fw-medium" style="font-style: ; font-family: Cascadia Code, sans-serif;">TOTAL NUMBER OF STUDENT</h4>
                                 <h4 class="mb-0">
+                                <hr class="horizontal dark mt-2">
                                     <div>{{$dashboardData->student_count }}</div>
                                 </h4>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -62,27 +70,7 @@
         <div id="chart"></div>
     </div>   -->
     
-    <div class="row">
     
-    @if(isset($dashboardData->requirementsPerService))
-        @foreach($dashboardData->requirementsPerService as $requirement)
-            <div class="col-lg-3 mb-3">
-                <div class="card border-0 shadow-sm">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <h4>{{ ucfirst($requirement->service->service_name) }}</h4>
-                                <span>Total: {{ $requirement->total }}</span><br>
-                                <span>Deficient: {{ $requirement->deficient_count }}</span><br>
-                                <span>Completed: {{ $requirement->completed_count }}</span><br>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endif
-    </div>
     <div class="row">
         @if(isset($dashboardData->program_student_counts))
             @foreach($dashboardData->program_student_counts as $program)

@@ -68,26 +68,6 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="phone_number" class="form-control-label">{{ __('Phone Number') }} <b class="text-danger">*</b></label>
-                                        <input required class="form-control @error('phone_number') border-danger @enderror" type="tel" placeholder="12345" id="phone_number" name="phone_number" value="{{ old('phone_number') ?? $formData->phone_number }}" >
-                                        @error('phone_number')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="address" class="form-control-label">{{ __('Address') }} <b class="text-danger">*</b></label>
-                                    <input required class="form-control @error('address') border-danger @enderror" type="text" placeholder="Address" id="address" name="address" value="{{ old('address') ?? $formData->address }}" >
-                                    @error('address')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label for="course" class="form-control-label">{{ __('Course') }} <b class="text-danger">*</b></label>
                                     <input required class="form-control @error('course') border-danger @enderror" type="text" placeholder="Course" id="course" name="course" value="{{ old('course') ?? $formData->course }}" >
                                     @error('course')
@@ -115,16 +95,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="lrn_number" class="form-control-label">{{ __('LRN') }} <b class="text-danger">*</b></label>
-                                    <input required class="form-control @error('lrn_number') border-danger @enderror" type="text" placeholder="LRN" id="lrn_number" name="lrn_number" value="{{ old('lrn_number') ?? $formData->lrn_number }}" >
-                                    @error('lrn_number')
-                                        <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="student_number" class="form-control-label">{{ __('Student No.') }}</label>
+                                    <label for="student_number" class="form-control-label">{{ __('Student Number') }} </label>
                                     <input  class="form-control @error('student_number') border-danger @enderror" type="text" placeholder="Student ID Number" id="student_number" name="student_number" value="{{ old('student_number') ?? $formData->student_number }}" >
                                     @error('student_number')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -141,7 +112,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary float-end btn-md mt-4 mb-4" >
+                        <button type="submit" class="btn btn-danger float-end btn-md mt-4 mb-4" >
                           {{ (isset($formData->id) ? 'Update' : 'Save' )}}
                         </button>
                     </div>

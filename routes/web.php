@@ -34,11 +34,14 @@ Route::middleware([CheckAuthAdmin::class])->group(function () {
 	Route::get('student-management', [HomeController::class, 'StudentManagement'])->name('StudentManagement');
 	Route::get('/student-management/{id}', [HomeController::class, 'showServiceManagement'])->name('show.requirements');
 
+	Route::get('admission', [HomeController::class, 'admission'])->name('admission');
+	Route::get('/student-management/{id}', [HomeController::class, 'showServiceManagement'])->name('show.requirements');
+
 	Route::get('student-list', [HomeController::class, 'StudentList'])->name('Student-List');
 	Route::get('student/{name}', [HomeController::class, 'editStudent'])->name('edit.student');
 
-	Route::get('admission', [HomeController::class, 'admission'])->name('admission');
-	Route::get('admission/{id}', [HomeController::class, 'editAdmission'])->name('edit.admission');
+	Route::get('freshmen', [HomeController::class, 'freshmen'])->name('freshmen');
+	Route::get('freshmen/{id}', [HomeController::class, 'editFreshmen'])->name('edit.freshmen');
 	
 	Route::get('returnee', [HomeController::class, 'reAdmission'])->name('returnee');
 	Route::get('returnee/{id}', [HomeController::class, 'editReAdmission'])->name('edit.returnee');
@@ -48,6 +51,18 @@ Route::middleware([CheckAuthAdmin::class])->group(function () {
 
 	Route::get('cross-enroll', [HomeController::class, 'CrossEnroll'])->name('cross-enroll');
 	Route::get('cross-enroll/{id}', [HomeController::class, 'editCrossEnroll'])->name('edit.cross-enroll');
+
+	Route::get('newstudent', [HomeController::class, 'newstudent'])->name('newstudent');
+	Route::get('newstudent/{id}', [HomeController::class, 'editnewstudent'])->name('edit.newstudent ');
+
+	Route::get('completed', [HomeController::class, 'completed'])->name('completed');
+	Route::get('completed/{id}', [HomeController::class, 'editcompleted'])->name('edit.completed ');
+
+	Route::get('deficiency', [HomeController::class, 'deficiency'])->name('deficiency');
+	Route::get('deficiency/{id}', [HomeController::class, 'editdeficiency'])->name('edit.deficiency');
+
+	Route::get('overallstudent', [HomeController::class, 'overallstudent'])->name('overallstudent');
+	Route::get('overallstudent/{id}', [HomeController::class, 'editoverallstudent'])->name('edit.overallstudent');
 
 	// save requirement
 	Route::post('/requirement', [HomeController::class, 'storeRequirement'])->name('store.requirement');

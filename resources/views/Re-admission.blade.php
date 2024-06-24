@@ -7,7 +7,7 @@
             <div class="container-fluid py-4">
                 <div class="card">
                     <div class="card-header pb-0 px-3">
-                        <h6 class="mb-0 font-weight-bolder  alert alert-dark mx-10 role=alert text-white text-center text-primary">{{ __('Student Information') }}</h6>
+                        <h6 class="mb-0 font-weight-bolder  alert alert-warning mx-10 role=alert text-white text-center text-primary">{{ __('Student Information') }}</h6>
                     </div>
                     <div class="card-body pt-4 p-3">
                         @if(isset($formData->id))
@@ -113,7 +113,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                            <h6 class="font-weight-bolder alert alert-dark mx-10 role=alert text-white text-center text-primary">Student Requirements for Re-Admission/Returnee</h6>
+                            <h6 class="font-weight-bolder alert alert-warning mx-10 role=alert text-white text-center text-primary">Student Requirements for Re-Admission/Returnee</h6>
                     </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
@@ -181,7 +181,7 @@
         </div>
         <!-- Button trigger modal -->
         <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-primary float-end btn-md mt-4 mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-danger float-end btn-md mt-4 mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Received By
             </button>
             <!-- Modal -->
@@ -189,7 +189,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Remarks</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -235,7 +235,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-warning">Submit</button>
                     </div>
                 </div>
             </div>

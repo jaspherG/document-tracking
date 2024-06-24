@@ -14,8 +14,8 @@
                             @method('PUT')
                         @endif
                         @csrf
-                        <input type="hidden" name="route_name" value="transferee">
-                        <input type="hidden" name="service_id" value="3">
+                        <input type="hidden" name="route_name" value="admission">
+                        <input type="hidden" name="service_id" value="1">
                         <input type="hidden" name="requirement_id" value="{{$formData->id ?? ''}}"> 
                         <input type="hidden" name="student_id" value="{{$formData->student_id ?? ''}}"> 
                         @if($errors->any())
@@ -42,17 +42,8 @@
                         <div class="row">
                         <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="user-name" class="form-control-label">{{ __('Previous School') }} <b class="text-danger">*</b></label>
-                                        <input required class="form-control @error('name') border-danger @enderror" type="text" placeholder="Name" id="user-name" name="name" value="{{ old('name') ?? $formData->user_student->name }}" >
-                                        @error('name')
-                                            <p class="text-danger text-xs mt-2">{{ $message }}</p>
-                                        @enderror
-                                </div>
-                            </div>
-                        <div class="col-md-6">
-                                <div class="form-group">
                                     <label for="student_number" class="form-control-label">{{ __('Student No.') }} <b class="text-danger">*</b></label>
-                                    <input  class="form-control @error('student_number') border-danger @enderror" type="text" placeholder="Student ID Number" id="student_number" name="student_number" value="{{ old('student_number') ?? $formData->user_student->student_number }}" >
+                                    <input required class="form-control @error('student_number') border-danger @enderror" type="text" placeholder="Student ID Number" id="student_number" name="student_number" value="{{ old('student_number') ?? $formData->user_student->student_number }}" >
                                     @error('student_number')
                                         <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                     @enderror
@@ -76,7 +67,7 @@
                                         @enderror
                                 </div>
                             </div>
-                        <div class="col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="course" class="form-control-label">{{ __('Program') }} <b class="text-danger">*</b></label>
                                     @php
@@ -86,7 +77,7 @@
                                         <option value="">-- select course --</option>  
                                         @if(isset($programs) && count($programs) > 0)
                                             @foreach($programs as $program)
-                                                <option value="{{ $program->id}}" {{ $c_year == $program->id ? 'selected' : '' }}>{{$program->program_name}}</option>  
+                                                <option value="{{ $program->id}}" {{ $c_year == $program->id ? 'selected' : '' }}>{{$program->program_name}} {{$program->description}} </option>  
                                             @endforeach
                                         @endif
                                     </select>
@@ -122,9 +113,10 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                            <h6 class="font-weight-bolder alert alert-warning mx-10 role=alert text-white text-center text-primary">Student Requirements for Transferee</h6>
+                            <h6 class="font-weight-bolder alert alert-warning mx-10 role=alert text-white text-center text-primary">Student Requirements for Freshmen</h6>
                     </div>
                         <div class="card-body px-0 pt-0 pb-2">
+                            
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center justify-content-center mb-0">
                                     <thead>
@@ -167,8 +159,8 @@
                                                         </div>
                                                         @if(isset($r_document) && !empty($r_document->image))
                                                         <div >
-                                                            <a data-fslightbox="all-requirements" href="/images/transferee/{{$r_document->image}}">
-                                                                <img src="/images/transferee/{{$r_document->image}}" class="avatar avatar-sm me-3 ">
+                                                            <a data-fslightbox="all-requirements" href="/images/admission/{{$r_document->image}}">
+                                                                <img src="/images/admission/{{$r_document->image}}" class="avatar avatar-sm me-3 ">
                                                             </a>
                                                         </div>
                                                         @endif
@@ -198,7 +190,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Remarks</h5>
+                        <h5 class="modal-title" id="exampleModalLabel"></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -244,11 +236,11 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-warning">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</form> 
+</form>
 @endsection

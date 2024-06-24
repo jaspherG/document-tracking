@@ -19,10 +19,10 @@
 @section('content')
 <div class="row  mb-5">
   <div class="col-12 mb-md-0  d-flex align-items-center justify-content-center gap-2 pt-2">
-      <a href="{{ route('show.requirements', ['id' => 'All'] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_program == 0 ? 'active' : '') }}">All</a>
+      <a href="{{ route('show.requirements', ['id' => 'All'] ) }}" class="btn btn-sm btn-outline-dark  {{ ($_program == 0 ? 'active' : '') }}">All</a>
       @if(isset($programs) && count($programs) > 0)
         @foreach($programs as $program)
-          <a href="{{ route('show.requirements', ['id' => $program->program_name ] ) }}" class="btn btn-sm btn-outline-primary  {{ ($_program == $program->id ? 'active' : '') }}">{{ ucfirst($program->program_name) }}</a>
+          <a href="{{ route('show.requirements', ['id' => $program->program_name ] ) }}" class="btn btn-sm btn-outline-danger  {{ ($_program == $program->id ? 'active' : '') }}">{{ ucfirst($program->program_name) }}</a>
         @endforeach
       @endif
   </div>
@@ -50,9 +50,9 @@
                         @endif
                     </select>
                 </div> -->
-                <div class="col-md-2 d-none">
+                <div class="col-md-3">
                     <select class="form-control filter-requirement form-select">
-                        <option value="">Filter Requirement</option>
+                        <option value="">Requirement</option>
                         @if(isset($services) && count($services) > 0)
                             @foreach($services as $service)
                                 <option value="{{ $service->id }}">{{ ucfirst($service->service_name) }}</option>
@@ -60,9 +60,9 @@
                         @endif
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3 d-none">
                     <select class="form-control filter-document form-select">
-                        <option value="">Filter document</option>
+                        <option value="">Document</option>
                         @if(isset($documents) && count($documents) > 0)
                             @foreach($documents as $document)
                                 <option value="{{ $document->id }}">{{ $document->document_name }}</option>
@@ -72,14 +72,14 @@
                 </div>
                 <div class="col-md-3">
                     <select class="form-control filter-document-status form-select">
-                    <option value="">Filter document status</option></marquee>
+                    <option value="">Document status</option></marquee>
                         <option value="1">Completed</option>
                         <option value="0">Deficient</option>
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <select class="form-control filter-academic-year form-select">
-                        <option value="">Filter A.Y.</option>
+                        <option value="">Academic Year</option>
                         @if(isset($academic_years) && count($academic_years) > 0)
                             @foreach($academic_years as $academic_year)
                                 <option value="{{ $academic_year }}">{{ $academic_year }}</option>
@@ -102,19 +102,20 @@
 
       <div class="card-body px-0 pt-0 pb-2">
         <div class="p-0">
-          <table class="table align-items-center mb-0 table-hover ">
+          <table id="example" class="table align-items-center mb-0 table-hover table table-striped" style="width:100%">
             <thead>
                 <tr>
+                <table id="example" class="table table-striped" style="width:100%">
                   <th>#</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                       Photo
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    Students No.
+                    Students Number
                   </th>
                 
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" >
-                    Name                    
+                    Student Name                    
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Program
@@ -123,13 +124,13 @@
                     Year Level
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    Completion
+                    Completion of Requirements
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Academic Year
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                    Requirement
+                    Status
                   </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                     Action
@@ -165,7 +166,7 @@
                             </div>
                           </div>
                           <div class="progress">
-                              <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="{{ $requirement->completionPercentageFormatted }}" aria-valuemin="0" aria-valuemax="100"></div>
+                              <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="{{ $requirement->completionPercentageFormatted }}" aria-valuemin="0" aria-valuemax="100"></div>
                           </div>
                         </div>
                       </td>

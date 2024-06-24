@@ -43,21 +43,54 @@ class HomeController extends Controller
         }
 
         // Prepare data rows
-        $table_data = [];
-        foreach ($service->requirements as $requirement) {
-            $rowData = [
-                'student_number' => $requirement->user_student->student_number,
-                'name' => $requirement->user_student->name,
-            ];
-
-            foreach ($requirement->requirement_documents as $document) {
-                $rowData['documents'][] = $document->status == 1 ? 'Complete' : '';
-            }
-
-            $table_data[] = $rowData;
-        }
+        $table_data = $this->reportformattedRequirements($service->requirements);
         
         return view('reports', compact(['user', 'services', 'academic_years', 'table_data', 'header_rows', 'programs']))->with('_page', 'reports');
+    }
+
+    private function studentReportData($request) {
+        $service = Service::with(['requirements.user_student', 'requirements.requirement_documents.document']);
+        if(!empty($request->academic_year)){
+            $service->with(['requirements' => function($q) use ($request) {
+                $q->where('academic_year', $request->academic_year);
+            }]);
+            $year = $request->academic_year;
+        } else {
+            $year = 'All';
+        }
+        $service = $service->where('id', $request->service_id)->first();
+
+        if (!$service) {
+            return response()->json(['message' => 'Service not found'], 404);
+        } 
+
+        $data = new \stdClass();
+
+        $data->tableData = $this->reportformattedRequirements($service->requirements);
+        $data->title = "List of ".ucfirst($service->service_name);
+        $data->year = $year;
+
+        return $data;
+    }
+
+    private function reportformattedRequirements(&$requirements) {
+        foreach ($requirements as $requirement) {
+            $completedDocumentsCount = 0;
+            $deficientDocumentsCount = 0;
+            
+            foreach ($requirement->requirement_documents as $document) {
+                if ($document->status == 1) {
+                    $completedDocumentsCount++;
+                } else if ($document->status == 0) {
+                    $deficientDocumentsCount++;
+                }
+            }
+    
+            $requirement->deficientDocumentsCount = $deficientDocumentsCount;
+            $requirement->completedDocumentsCount = $completedDocumentsCount;
+        }
+    
+        return $requirements;
     }
 
 
@@ -425,7 +458,7 @@ class HomeController extends Controller
         abort(404);
     }
 
-    public function admission(Request $request){
+    public function freshmen(Request $request){
         $user = Auth::user();
         $formData = $this->emptyFormData($request->student_id);
         $programs = Program::all();
@@ -436,10 +469,67 @@ class HomeController extends Controller
         } else {
             $documents = [];
         }
-        return view('admission', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'Admission');
+        $serviceData = $this->getServiceStudentRequirements(1);
+        return view('admission', compact(['user', 'formData', 'documents', 'programs', 'serviceData']))->with('_title', '')->with('_page', 'Admission');
     }
 
-    public function editAdmission(string $id){
+    public function newstudent(Request $request){
+        $user = Auth::user();
+        $formData = $this->emptyFormData($request->student_id);
+        $programs = Program::all();
+        $admission = Service::findOrFail(1); // 1 = admission
+        if ($admission) {
+            $documentIds = json_decode($admission->document_ids);
+            $documents = Document::whereIn('id', $documentIds)->get();
+        } else {
+            $documents = [];
+        }
+        return view('newstudent', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'Admission');
+    }
+
+    public function completed(Request $request){
+        $user = Auth::user();
+        $formData = $this->emptyFormData($request->student_id);
+        $programs = Program::all();
+        $admission = Service::findOrFail(1); // 1 = admission
+        if ($admission) {
+            $documentIds = json_decode($admission->document_ids);
+            $documents = Document::whereIn('id', $documentIds)->get();
+        } else {
+            $documents = [];
+        }
+        return view('completed', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'dashboard');
+    }
+
+    public function deficiency(Request $request){
+        $user = Auth::user();
+        $formData = $this->emptyFormData($request->student_id);
+        $programs = Program::all();
+        $admission = Service::findOrFail(1); // 1 = admission
+        if ($admission) {
+            $documentIds = json_decode($admission->document_ids);
+            $documents = Document::whereIn('id', $documentIds)->get();
+        } else {
+            $documents = [];
+        }
+        return view('deficiency', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'dashboard');
+    }
+
+    public function overallstudent(Request $request){
+        $user = Auth::user();
+        $formData = $this->emptyFormData($request->student_id);
+        $programs = Program::all();
+        $admission = Service::findOrFail(1); // 1 = admission
+        if ($admission) {
+            $documentIds = json_decode($admission->document_ids);
+            $documents = Document::whereIn('id', $documentIds)->get();
+        } else {
+            $documents = [];
+        }
+        return view('overallstudent', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'dashboard');
+    }
+
+    public function editFreshmen(string $id){
         $user = Auth::user();
         $programs = Program::all();
         $formData = Requirement::with(['user_student', 'service', 'requirement_documents'])->where('id', $id)->where('service_id', 1)->first();
@@ -448,9 +538,9 @@ class HomeController extends Controller
             $formData->academic_year_1 = $academic_year[0];
             $formData->academic_year_2 = $academic_year[1];
 
-            $admission = Service::findOrFail(1); // 1 = admission
-            if ($admission) {
-                $documentIds = json_decode($admission->document_ids);
+            $freshman = Service::findOrFail(1); // 1 = freshman
+            if ($freshman) {
+                $documentIds = json_decode($freshman->document_ids);
                 $documents = Document::whereIn('id', $documentIds)->get();
             } else {
                 $documents = [];
@@ -628,8 +718,8 @@ class HomeController extends Controller
         }
     
         $route_name = $request->input('route_name');
-        if( $route_name == 'admission') {
-            return redirect()->route('admission')->with('_title', '');
+        if( $route_name == 'freshmen') {
+            return redirect()->route('freshmen')->with('_title', '');
         } else if ( $route_name == 'returnee') {
             return redirect()->route('returnee')->with('_title', '');
         } else if ( $route_name == 'transferee') {
@@ -786,32 +876,22 @@ class HomeController extends Controller
             } else if ($id === 'get-filtered-report-data') {
                 
                 $service = Service::with(['requirements.user_student', 'requirements.requirement_documents.document']);
-                if(!empty($request->academic_year)){
-                    $service->with(['requirements' => function($q) use ($request) {
+                $service->with(['requirements' => function($q) use ($request) {
+                    if(!empty($request->academic_year)){
                         $q->where('academic_year', $request->academic_year);
-                    }]);
-                }
-                if(!empty($request->program_id)){
-                    $service->with(['requirements' => function($q) use ($request) {
+                    }
+                    if(!empty($request->program_id)){
                         $q->where('program_id', $request->program_id);
-                    }]);
-                }
+                    }
+                    if(!empty($request->remarks)){
+                        $q->where('status', $request->remarks);
+                    }
+                }]);
                 $service = $service->where('id', $request->service_id)->first();
 
-                // Prepare data rows
-                $table_data = [];
-                foreach ($service->requirements as $requirement) {
-                    $rowData = [
-                        'student_number' => $requirement->user_student->student_number,
-                        'name' => $requirement->user_student->name,
-                    ];
+                $table_data = $this->reportformattedRequirements($service->requirements);
 
-                    foreach ($requirement->requirement_documents as $document) {
-                        $rowData['documents'][] = $document->status == 1 ? 'Complete' : '';
-                    }
 
-                    $table_data[] = $rowData;
-                }
                 return view('components.filtered-report-table-data', compact('table_data'))->render();
             }
         } 

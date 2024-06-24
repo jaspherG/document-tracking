@@ -43,14 +43,14 @@
                         <td class="ps-4">{{$requirement->class_year}}</td>
                         <td class="ps-4">
                           <div class="progress-wrapper w-75 ">
-                            <div class="progress-info  mb-1">
+                            <div class="progress-warning  mb-1">
                               <div class="progress-percentage">
                                 <span class="text-xs font-weight-bold">({{$requirement->completedDocumentsCount}} out of {{$requirement->totalDocumentsCount}})</span> | 
                                 <span class="text-xs font-weight-bold">{{$requirement->completionPercentageFormatted}}%</span>
                               </div>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="{{ $requirement->completionPercentageFormatted }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-gradient-warning" role="progressbar" aria-valuenow="{{ $requirement->completionPercentageFormatted }}" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                           </div>
                         </td>

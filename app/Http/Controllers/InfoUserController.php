@@ -66,12 +66,12 @@ class InfoUserController extends Controller
             'student_id' => 'exists:users,id',
             'name' => 'required|string',
             'email' => 'required|email|string',
-            'phone_number' => 'required|string|max:11',
-            'address' => 'required|string',
+            'phone_number' => 'nullable|string|max:11',
+            'address' => 'nullable|string',
             'course' => 'required|string',
             'class_year' => 'required|string',
-            'lrn_number' => 'required|string',
-            'student_number' => 'nullable|string',
+            'lrn_number' => 'nullable|string',
+            'student_number' => 'required|string',
         ]);
 
         $user = User::findOrFail($validated['student_id']);

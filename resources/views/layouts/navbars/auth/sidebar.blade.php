@@ -19,7 +19,7 @@
         </a>
       </li>
       <li class="nav-item mt-2">
-        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 alert alert-dark mx-4 role=alert text-white text-center text-primary">Student Management</h6>
+        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-10 alert alert-warning mx-4 role=alert text-white text-center text-primary">Student Management</h6>
       </li>
       <li class="nav-item pb-2">
         <a class="nav-link {{ ($_page == 'Student Management' ? 'active' : '') }}" href="{{ url('student-management') }}">
@@ -41,11 +41,11 @@
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6 alert alert-dark mx-4 role=alert text-white text-center text-primary">Services</h6>
       </li>
       <li class="nav-item">
-        <a class="nav-link {{ ($_page == 'Admission' ? 'active' : '') }}" href="{{ url('admission') }}">
+        <a class="nav-link {{ ($_page == 'Freshmen' ? 'active' : '') }}" href="{{ url('freshmen') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Admission' ? 'text-white' : 'text-dark') }} " aria-="true"></i>
+          <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Freshmen' ? 'text-white' : 'text-dark') }} " aria-="true"></i>
           </div>
-          <span class="nav-link-text ms-1">Admission Requirement</span>
+          <span class="nav-link-text ms-1">Freshman</span>
         </a>
       </li>
       <li class="nav-item ">
@@ -53,7 +53,7 @@
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Returnee' ? 'text-white' : 'text-dark') }} " aria-="true"></i>
           </div>
-          <span class="nav-link-text ms-1">Returnee Requirement</span>
+          <span class="nav-link-text ms-1">Returnee</span>
         </a>  
       </li>
       <li class="nav-item ">
@@ -61,7 +61,7 @@
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
           <i style="font-size: 1rem;" class="fas fa-receipt ps-2 pe-2 text-center text-dark {{ ($_page == 'Transferee' ? 'text-white' : 'text-dark') }} " aria-="true"></i>
           </div>
-          <span class="nav-link-text ms-1">Transferee Requirement</span>
+          <span class="nav-link-text ms-1">Transferee </span>
         </a>
       </li>
       <li class="nav-item d-none">
