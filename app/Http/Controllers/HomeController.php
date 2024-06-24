@@ -24,6 +24,58 @@ class HomeController extends Controller
         return redirect('dashboard');
     }
 
+    public function dashboardReport(Request $request, string $status) {
+        $user = Auth::user();
+        $programs = Program::all();
+        $services = Service::select('id', 'service_name')->get();
+        $academic_years = Requirement::distinct()->pluck('academic_year');
+        $service = Service::with(['requirements' => function($q) use($status) {
+            if(isset($status)) {
+                $q->where('status', ucfirst($status));
+            }
+        }])
+            ->where('id', 1);
+       
+        $service = $service->first();
+           
+        // Prepare headers
+        $header_rows = ['Student Number', 'Student Name'];
+        if ($service->requirements->isNotEmpty()) {
+            $documents = $service->requirements->first()->requirement_documents;
+            foreach($documents as $document) {
+                $header_rows[] =  $document->document->document_name;
+            }
+        }
+
+        // Prepare data rows
+        $table_data = $this->reportformattedRequirements($service->requirements);
+        
+        return view('reports', compact(['user', 'services', 'academic_years', 'table_data', 'header_rows', 'programs']))->with('_page', 'reports');
+    }
+
+    public function overallStudent() {
+        $user = Auth::user();
+        $programs = Program::all();
+        $students = User::where('type', 'Student')->get();
+        return view('overallstudent', compact(['user', 'students', 'programs']))->with('_page', 'Overall Student')->with('_program', 0);
+    }
+
+    public function filterOverallStudent(string $program) {
+        $user = Auth::user();
+        $programs = Program::all();
+        $students = User::where('type', 'Student');
+        if(isset($program)) {
+            $progID = 0;
+            if($program != 'All'){
+                $prog = Program::where('program_name', $program)->first();
+                $progID = $prog->id;
+                $students->where('program_id', $prog->id);
+            }
+        }
+        $students = $students->get();
+        return view('overallstudent', compact(['user', 'students', 'programs']))->with('_page', 'Overall Student')->with('_program',  $progID);
+    }
+
     public function report()
     {
         $user = Auth::user();
@@ -515,19 +567,19 @@ class HomeController extends Controller
         return view('deficiency', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'dashboard');
     }
 
-    public function overallstudent(Request $request){
-        $user = Auth::user();
-        $formData = $this->emptyFormData($request->student_id);
-        $programs = Program::all();
-        $admission = Service::findOrFail(1); // 1 = admission
-        if ($admission) {
-            $documentIds = json_decode($admission->document_ids);
-            $documents = Document::whereIn('id', $documentIds)->get();
-        } else {
-            $documents = [];
-        }
-        return view('overallstudent', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'dashboard');
-    }
+    // public function overallstudent(Request $request){
+    //     $user = Auth::user();
+    //     $formData = $this->emptyFormData($request->student_id);
+    //     $programs = Program::all();
+    //     $admission = Service::findOrFail(1); // 1 = admission
+    //     if ($admission) {
+    //         $documentIds = json_decode($admission->document_ids);
+    //         $documents = Document::whereIn('id', $documentIds)->get();
+    //     } else {
+    //         $documents = [];
+    //     }
+    //     return view('overallstudent', compact(['user', 'formData', 'documents', 'programs']))->with('_title', '')->with('_page', 'dashboard');
+    // }
 
     public function editFreshmen(string $id){
         $user = Auth::user();

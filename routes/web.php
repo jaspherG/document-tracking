@@ -78,6 +78,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('dashboard', [HomeController::class, 'viewDashboard'])->name('dashboard');
 
 	Route::get('reports', [HomeController::class, 'report'])->name('reports');
+	Route::get('reports/{status}', [HomeController::class, 'dashboardReport'])->name('dashboard-reports');
+
+	Route::get('overall-student', [HomeController::class, 'overallStudent'])->name('all-students');
+	Route::get('overall-student/{program}', [HomeController::class, 'filterOverallStudent'])->name('f-all-students');
 
 	Route::get('profile', [HomeController::class, 'profile'])->name('profile');
 
