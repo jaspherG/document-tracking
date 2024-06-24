@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <a href="{{ url('completed') }} {{ ($_page == 'completed' ? 'active' : '') }}">                   
+                                <a href="{{ route('dashboard-reports', ['status' => 'completed' ]) }}" class="{{ ($_page == 'completed' ? 'active' : '') }}">                   
                                 <h4 class="title text-white text-uppercase fw-medium" style="font-style: ; font-family: Cascadia Code, sans-serif;">NUMBER OF STUDENT WITH COMPLETED REQUIREMENTS</h4>
                                 <h4 class="mb-0">
                                 <hr class="horizontal dark mt-2">
@@ -31,7 +31,7 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                            <a href="{{ url('deficiency') }} {{ ($_page == 'deficiency' ? 'active' : '') }}"> 
+                            <a href="{{ route('dashboard-reports', ['status' => 'deficiency' ]) }}" class="{{ ($_page == 'deficiency' ? 'active' : '') }}">              
                                 <h4 class="title text-white text-uppercase fw-medium" style="font-style: ; font-family: Cascadia Code, sans-serif;">NUMBER OF STUDENT WITH DEFICIENCY REQUIREMENTS</h4>
                                 <h4 class="mb-0">
                                 <hr class="horizontal dark mt-2">
