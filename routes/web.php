@@ -55,11 +55,11 @@ Route::middleware([CheckAuthAdmin::class])->group(function () {
 	Route::get('newstudent', [HomeController::class, 'newstudent'])->name('newstudent');
 	Route::get('newstudent/{id}', [HomeController::class, 'editnewstudent'])->name('edit.newstudent ');
 
-	Route::get('completed', [HomeController::class, 'completed'])->name('completed');
-	Route::get('completed/{id}', [HomeController::class, 'editcompleted'])->name('edit.completed ');
+	// Route::get('completed', [HomeController::class, 'completed'])->name('completed');
+	// Route::get('completed/{id}', [HomeController::class, 'editcompleted'])->name('edit.completed ');
 
-	Route::get('deficiency', [HomeController::class, 'deficiency'])->name('deficiency');
-	Route::get('deficiency/{id}', [HomeController::class, 'editdeficiency'])->name('edit.deficiency');
+	// Route::get('deficiency', [HomeController::class, 'deficiency'])->name('deficiency');
+	// Route::get('deficiency/{id}', [HomeController::class, 'editdeficiency'])->name('edit.deficiency');
 
 	Route::get('overallstudent', [HomeController::class, 'overallstudent'])->name('overallstudent');
 	Route::get('overallstudent/{id}', [HomeController::class, 'editoverallstudent'])->name('edit.overallstudent');
@@ -78,7 +78,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('dashboard', [HomeController::class, 'viewDashboard'])->name('dashboard');	
 
 	Route::get('reports', [HomeController::class, 'report'])->name('reports');
-	Route::get('reports/{status}', [HomeController::class, 'dashboardReport'])->name('dashboard-reports');
+	Route::get('{status}', [HomeController::class, 'dashboardReport'])->name('dashboard-reports');
+
+	Route::get('{status}/{id}', [HomeController::class, 'dashboardReport'])->name('show.dash-requirements');
 
 	Route::get('overall-student', [HomeController::class, 'overallStudent'])->name('all-students');
 	Route::get('overall-student/{program}', [HomeController::class, 'filterOverallStudent'])->name('f-all-students');

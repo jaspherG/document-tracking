@@ -52,7 +52,7 @@
                                 </select>
                             </div>
                             <div class="col-md-2">
-                                <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button type="button" class="btn btn-outline-warning dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Generate
                                 </button>
                                 

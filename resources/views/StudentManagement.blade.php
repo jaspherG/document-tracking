@@ -106,7 +106,9 @@
             <thead>
                 <tr>
                 <table id="example" class="table table-striped" style="width:100%">
-                  <th>#</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                    #
+                  </th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                       Photo
                   </th>
@@ -244,8 +246,16 @@
       </div>
     </div>
   </div>
-</div>   
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"></link>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css"></link>
+<link rel="stylesheet" href="style.css"></link>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>  
 <script>
     $(document).ready(function(){
       function updateProgressBar(progressbar, percentage) {

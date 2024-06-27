@@ -1,16 +1,16 @@
 @extends('layouts.user_type.auth')
 
 @section('content')
-<div class="alert alert-danger mx-5 mb-2" role="alert">
+<div class="alert alert-warning mx- mb-2" role="alert">
     <span class="text-white">
-        <strong>Hi {{$user->name}}</strong> Welcome
+        <strong>Welcome {{$user->name}} User</strong>
     </span>
 </div>
 <div class="row mx-2 mb-4">
     <div class="col-lg-12 col-md-12 mb-md-0 mb-1">
         <div class="row">
             <div class="col-lg-4 mb-3">
-                <div id="card_completed" class="card cursor-pointer add-shadow bg-gradient-warning border border-2 border-primary')">
+                <div id="card_completed" class="card cursor-pointer add-shadow bg-warning border border-2 border-primary')">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="col-lg-4 mb-3">
-                <div id="card_completed" class="card cursor-pointer add-shadow bg-gradient-warning border border-2 border-primary')">
+                <div id="card_completed" class="card cursor-pointer add-shadow bg-warning border border-2 border-primary')">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="col-lg-4 mb-3">
-                <div id="card_completed" class="card cursor-pointer add-shadow bg-gradient-warning border border-2 border-primary')">
+                <div id="card_completed" class="card cursor-pointer add-shadow bg-warning border border-2 border-primary')">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
@@ -99,7 +99,14 @@
   </div>
   
    
+<link rel="stylesheet" href=""></link>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css"></link>
+<link rel="stylesheet" href="style.css"></link>
 
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

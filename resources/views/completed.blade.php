@@ -13,33 +13,68 @@
 </div>
 
 <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0">`
-                        <table class="table align-items-center mb-0 table-hover ">
-                            <thead>
-                                <tr>
-                                  <th>Number</th>
-                                  <th>Student Number</th>
-                                  <th>Student Name</th>
-                                  <th>Program</th>
-                                  <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody id="table_body">
-                              @if(isset($table_data) && count($table_data) > 0)
-                                @foreach($table_data as $key => $data)
-                                    <tr>
-                                        <td>{{$key+=1}}</td>
-                                        <td>{{$data->user_student->student_number}}</td>
-                                        <td>{{$data->user_student->name}}</td>
-                                        <td>{{$data->program->program_name}}</td>
-                                        <td>{{$data->status}}</td>
-                                    </tr>
-                                @endforeach
-                              @else
-                                  <tr>
-                                      <td colspan="4">No records found</td>
-                                  </tr>
-                              @endif
+  <div class="p-0">
+    <table id="example" class="table align-items-center mb-0 table-hover table table-striped" style="width:100%">
+      <thead>
+          <tr>
+          <table id="example" class="table table-striped" style="width:100%">
+            <th>#</th>
+            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
+                Photo
+            </th>
+            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
+              Students Number
+            </th>
+            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7" >
+              Student Name                    
+            </th>
+            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
+              Program
+            </th>
+            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
+              Year Level
+            </th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              Remarks
+            </th>
+        </tr>
+        </thead>
+        <tbody id="table_body">
+        @if(isset($students) && count($students) > 0)
+            @foreach($students as $key => $student)
+            <tr>
+                <td class="ps-4">
+                    <p class="text-xs font-weight-bold mb-0">{{$key+1}}</p>
+                </td>
+                <td>
+                    <div>
+                        <a data-fslightbox="student-list" href="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}">
+                            <img src="{{(!empty($student->image) ? '/images/avatars/'.$student->image : '/images/user.jpg' )}}" class="avatar avatar-sm me-3">
+                        </a>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <p class="text-xs font-weight-bold mb-0">{{$student->student_number}}</p>
+                </td>
+                <td class="text-center">
+                    <p class="text-xs font-weight-bold mb-0">{{$student->name}}</p>
+                </td>
+                <td class="text-center">
+                    <p class="text-xs font-weight-bold mb-0">{{$student->program->program_name ?? ''}}</p>
+                </td>
+                <td class="text-center">
+                    <span class="text-secondary text-xs font-weight-bold">{{$student->class_year}}</span>
+                </td>
+                <td class="text-center">
+                    <span class="text-secondary text-xs font-weight-bold">{{$student->remarks}}</span>
+                </td>
+            </tr>
+            @endforeach
+        @else
+        <tr>
+        <td col-span="4">No records found</td>
+        </tr>
+        @endif
                           </tbody>
 
                         </table>
@@ -48,5 +83,8 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
 
 @endsection

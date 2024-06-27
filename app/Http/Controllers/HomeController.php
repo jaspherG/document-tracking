@@ -24,33 +24,53 @@ class HomeController extends Controller
         return redirect('dashboard');
     }
 
-    public function dashboardReport(Request $request, string $status) {
-        $user = Auth::user();
-        $programs = Program::all();
-        $services = Service::select('id', 'service_name')->get();
-        $academic_years = Requirement::distinct()->pluck('academic_year');
-        $service = Service::with(['requirements' => function($q) use($status) {
-            if(isset($status)) {
-                $q->where('status', ucfirst($status));
-            }
-        }])
-            ->where('id', 1);
+    // public function dashboardReport(Request $request, string $status) {
+    //     $user = Auth::user();
+    //     $programs = Program::all();
+    //     $services = Service::select('id', 'service_name')->get();
+    //     $academic_years = Requirement::distinct()->pluck('academic_year');
+    //     $service = Service::with(['requirements' => function($q) use($status) {
+    //         if(isset($status)) {
+    //             $q->where('status', ucfirst($status));
+    //         }
+    //     }])
+    //         ->where('id', 1);
        
-        $service = $service->first();
+    //     $service = $service->first();
            
-        // Prepare headers
-        $header_rows = ['Student Number', 'Student Name'];
-        if ($service->requirements->isNotEmpty()) {
-            $documents = $service->requirements->first()->requirement_documents;
-            foreach($documents as $document) {
-                $header_rows[] =  $document->document->document_name;
-            }
+    //     // Prepare headers
+    //     $header_rows = ['Student Number', 'Student Name'];
+    //     if ($service->requirements->isNotEmpty()) {
+    //         $documents = $service->requirements->first()->requirement_documents;
+    //         foreach($documents as $document) {
+    //             $header_rows[] =  $document->document->document_name;
+    //         }
+    //     }
+
+    //     // Prepare data rows
+    //     $table_data = $this->reportformattedRequirements($service->requirements);
+        
+    //     return view('reports', compact(['user', 'services', 'academic_years', 'table_data', 'header_rows', 'programs']))->with('_page', 'reports');
+    // }
+
+    public function dashboardReport(Request $request, string $status) {
+        $id = $request->id ?? 'All';
+        if($id == 'All') {
+           $id = 0; 
+        } else {
+            $s_program = Program::where('program_name', $id)->first();
+            $id = $s_program->id;
         }
 
-        // Prepare data rows
-        $table_data = $this->reportformattedRequirements($service->requirements);
+        $documents = Document::all();
+        $programs = Program::all();
+        $services = Service::all();
         
-        return view('reports', compact(['user', 'services', 'academic_years', 'table_data', 'header_rows', 'programs']))->with('_page', 'reports');
+    
+        $user = Auth::user();
+        $serviceData = $this->getServiceStudentRequirements($id, $status, '', '', '', $status);
+        
+        return view('requirement-list', compact(['user', 'serviceData', 'documents', 'programs', 'services']))->with('_page', ucfirst($status))->with('_program', $id)->with('status', $status);
     }
 
     public function overallStudent() {
@@ -866,8 +886,8 @@ class HomeController extends Controller
             session()->flash('success', ucfirst($service->service_name).' update successfully!');
         }
         $route_name = $request->input('route_name');
-        if( $route_name == 'admission') {
-            return redirect()->route('edit.admission', ['id'=>$request->requirement_id])->with('_title', 'Edit');
+        if( $route_name == 'freshmen') {
+            return redirect()->route('edit.freshmen', ['id'=>$request->requirement_id])->with('_title', 'Edit');
         } else if ( $route_name == 'returnee') {
             return redirect()->route('edit.returnee', ['id'=>$request->requirement_id])->with('_title', 'Edit');
         } else if ( $route_name == 'transferee') {

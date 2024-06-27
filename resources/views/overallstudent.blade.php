@@ -36,6 +36,9 @@
             <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
               Year Level
             </th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+              Remarks
+            </th>
         </tr>
         </thead>
         <tbody id="table_body">
@@ -63,6 +66,9 @@
                 </td>
                 <td class="text-center">
                     <span class="text-secondary text-xs font-weight-bold">{{$student->class_year}}</span>
+                </td>
+                <td class="text-center">
+                    <span class="text-secondary text-xs font-weight-bold">{{$student->remarks}}</span>
                 </td>
             </tr>
             @endforeach

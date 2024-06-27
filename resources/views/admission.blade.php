@@ -14,7 +14,7 @@
                             @method('PUT')
                         @endif
                         @csrf
-                        <input type="hidden" name="route_name" value="admission">
+                        <input type="hidden" name="route_name" value="freshmen">
                         <input type="hidden" name="service_id" value="1">
                         <input type="hidden" name="requirement_id" value="{{$formData->id ?? ''}}"> 
                         <input type="hidden" name="student_id" value="{{$formData->student_id ?? ''}}"> 
